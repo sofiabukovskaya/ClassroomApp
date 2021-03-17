@@ -23,6 +23,7 @@ public class ShowCurrentClassActivity extends AppCompatActivity{
         currentClassCabinet = findViewById(R.id.room_number);
         currentClassFloor = findViewById(R.id.floor_text);
         currentClassStudents = findViewById(R.id.count_students);
+
         getInformationAboutCurrentClassroom();
     }
 

@@ -59,8 +59,8 @@ public class ClassroomAdapter extends RecyclerView.Adapter<ClassroomAdapter.View
         holder.editClass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int positionId = classroomModelList.get(position).getId();
-//                showCurrentPresenter.selectCurrentClass(positionId);
+                presenter.editCurrentClass(positionId);
+                notifyDataSetChanged();
             }
         });
 

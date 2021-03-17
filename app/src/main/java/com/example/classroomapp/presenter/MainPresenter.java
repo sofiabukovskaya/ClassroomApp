@@ -34,6 +34,19 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
+    public void editButtonWasClicked(Integer id, String name, int room, int floor) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                classroomModel = new ClassroomModel(id, name, room, floor,0);
+                repository.updateClass(classroomModel);
+                view.onSuccess("Edit!");
+            }
+        }).start();
+
+    }
+
+    @Override
     public List<ClassroomModel> loadAllDataInRecyclerView() {
         return repository.getListFromDataBase();
     }
@@ -51,9 +64,14 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void selectCurrentClass(int position) {
-        ClassroomModel classroomModel = repository.getCurrentClass(position);
+         classroomModel = repository.getCurrentClass(position);
         view.showCurrentClass(classroomModel);
     }
 
+    @Override
+    public void editCurrentClass(int position) {
+         classroomModel = repository.getCurrentClass(position);
+        view.editCurrentClassShow(classroomModel);
+    }
 
 }

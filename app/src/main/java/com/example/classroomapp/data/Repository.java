@@ -56,7 +56,6 @@ public class Repository implements MainContract.Repository {
 
         sqLiteDatabase = dataBaseClassroom.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-
         contentValues.put(DataBaseClassroom.COLUMN_NAME, classroomModel.getClassroomName());
         contentValues.put(DataBaseClassroom.COLUMN_ROOM_NUMBER, classroomModel.getClassroomRoomNumber());
         contentValues.put(DataBaseClassroom.COLUMN_FLOOR_NUMBER, classroomModel.getClassroomFloor());
@@ -74,6 +73,18 @@ public class Repository implements MainContract.Repository {
         sqLiteDatabase.execSQL("UPDATE " + DataBaseClassroom.TABLE_NAME + " SET " + DataBaseClassroom.COLUMN_ID + " = " +
                 DataBaseClassroom.COLUMN_ID + " -1 " + " WHERE " + DataBaseClassroom.COLUMN_ID + " > " + position + ";");
         sqLiteDatabase.close();
+    }
+
+    @Override
+    public long updateClass(ClassroomModel classroomModel) {
+        sqLiteDatabase = dataBaseClassroom.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DataBaseClassroom.COLUMN_NAME, classroomModel.getClassroomName());
+        contentValues.put(DataBaseClassroom.COLUMN_ROOM_NUMBER, classroomModel.getClassroomRoomNumber());
+        contentValues.put(DataBaseClassroom.COLUMN_FLOOR_NUMBER, classroomModel.getClassroomFloor());
+        contentValues.put(DataBaseClassroom.COLUMN_STUDENTS_COUNT, classroomModel.getStudentCount());
+        return sqLiteDatabase.update(DataBaseClassroom.TABLE_NAME, contentValues,DataBaseClassroom.COLUMN_ID + " = " +  classroomModel.getId(),null);
+
     }
 
     @Override

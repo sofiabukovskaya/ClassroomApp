@@ -50,20 +50,11 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     }
 
-    @Override
-    public void onError(String messageErrorAlert) {
-
-    }
 
     @Override
     public void updateListAfterDeleting(int position) {
         classroomAdapter.notifyItemRemoved(position);
         classroomAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void updateData(int position) {
-
     }
 
     @Override
@@ -74,6 +65,18 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         intent.putExtra("classroomRoom", currentClass.getClassroomRoomNumber());
         intent.putExtra("classroomFloor", currentClass.getClassroomFloor());
         intent.putExtra("classroomStudentsInfo", currentClass.getStudentCount());
+        startActivity(intent);
+    }
+
+    @Override
+    public void editCurrentClassShow(ClassroomModel currentClass) {
+        Intent intent = new Intent(this, EditClassActivity.class);
+        intent.putExtra("classroomId",currentClass.getId());
+        intent.putExtra("classroomName", currentClass.getClassroomName());
+        intent.putExtra("classroomRoom", currentClass.getClassroomRoomNumber());
+        intent.putExtra("classroomFloor", currentClass.getClassroomFloor());
+        classroomAdapter.notifyDataSetChanged();
+        classroomAdapter.notifyItemChanged(currentClass.getId());
         startActivity(intent);
     }
 

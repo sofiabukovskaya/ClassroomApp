@@ -64,21 +64,16 @@ public class AddClassroomActivity extends AppCompatActivity implements MainContr
     }
 
     @Override
-    public void onError(String messageErrorAlert) {
-        Toast.makeText(this, "New class is not added :(", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
     public void updateListAfterDeleting(int position) {
     }
 
     @Override
-    public void updateData(int position) {
+    public void showCurrentClass(ClassroomModel currentClass) {
 
     }
 
     @Override
-    public void showCurrentClass(ClassroomModel currentClass) {
+    public void editCurrentClassShow(ClassroomModel currentClass) {
 
     }
 }
