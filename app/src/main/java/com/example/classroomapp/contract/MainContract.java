@@ -1,4 +1,6 @@
-package com.example.classroomapp;
+package com.example.classroomapp.contract;
+
+import com.example.classroomapp.model.ClassroomModel;
 
 import java.util.List;
 
@@ -9,18 +11,20 @@ public interface MainContract {
         void onError(String messageErrorAlert);
         void updateListAfterDeleting(int position);
         void updateData(int position);
+        void showCurrentClass(ClassroomModel currentClass);
     }
 
     interface Presenter{
         void addButtonWasClicked(String name, int room, int floor);
         List<ClassroomModel> loadAllDataInRecyclerView();
         void alertToDeleteClass(int position);
-        void editData(int position);
+        void selectCurrentClass(int position);
     }
 
     interface Repository{
         List<ClassroomModel> getListFromDataBase();
         long addClasses(ClassroomModel classroomModel);
         void deleteClass(int position);
+       ClassroomModel getCurrentClass(int position);
     }
 }

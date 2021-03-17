@@ -1,7 +1,10 @@
-package com.example.classroomapp;
+package com.example.classroomapp.presenter;
 
-import android.app.ProgressDialog;
 import android.content.Context;
+
+import com.example.classroomapp.contract.MainContract;
+import com.example.classroomapp.data.Repository;
+import com.example.classroomapp.model.ClassroomModel;
 
 import java.util.List;
 
@@ -37,12 +40,20 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void alertToDeleteClass(int position) {
-        repository.deleteClass(position);
-        view.updateListAfterDeleting(position);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                repository.deleteClass(position);
+                view.updateListAfterDeleting(position);
+            }
+        }).start();
     }
 
     @Override
-    public void editData(int position) {
-        view.updateData(position);
+    public void selectCurrentClass(int position) {
+        ClassroomModel classroomModel = repository.getCurrentClass(position);
+        view.showCurrentClass(classroomModel);
     }
+
+
 }

@@ -1,4 +1,4 @@
-package com.example.classroomapp;
+package com.example.classroomapp.model;
 
 public class ClassroomModel {
     private int id;

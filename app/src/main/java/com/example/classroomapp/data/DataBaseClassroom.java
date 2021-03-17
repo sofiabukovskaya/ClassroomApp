@@ -1,4 +1,4 @@
-package com.example.classroomapp;
+package com.example.classroomapp.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

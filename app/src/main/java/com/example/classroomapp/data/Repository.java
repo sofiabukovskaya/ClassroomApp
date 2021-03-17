@@ -1,17 +1,22 @@
-package com.example.classroomapp;
+package com.example.classroomapp.data;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.classroomapp.contract.MainContract;
+import com.example.classroomapp.model.ClassroomModel;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Repository implements MainContract.Repository{
+public class Repository implements MainContract.Repository {
+
     private DataBaseClassroom dataBaseClassroom;
     private SQLiteDatabase sqLiteDatabase;
-    ArrayList<ClassroomModel> classrooms;
+    private Integer positionId;
+    private ArrayList<ClassroomModel> classrooms;
 
 
     public Repository(Context context) {
@@ -28,6 +33,7 @@ public class Repository implements MainContract.Repository{
         }
         return cursor;
     }
+
 
     @Override
     public List<ClassroomModel> getListFromDataBase() {
@@ -68,6 +74,25 @@ public class Repository implements MainContract.Repository{
         sqLiteDatabase.execSQL("UPDATE " + DataBaseClassroom.TABLE_NAME + " SET " + DataBaseClassroom.COLUMN_ID + " = " +
                 DataBaseClassroom.COLUMN_ID + " -1 " + " WHERE " + DataBaseClassroom.COLUMN_ID + " > " + position + ";");
         sqLiteDatabase.close();
+    }
+
+    @Override
+    public ClassroomModel getCurrentClass(int position) {
+        ClassroomModel classroomModel = null;
+        positionId = position;
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + DataBaseClassroom.TABLE_NAME + " WHERE " + DataBaseClassroom.COLUMN_ID +
+                " = " + positionId,
+                null);
+        if(cursor.moveToFirst()){
+            int idClass = cursor.getInt(cursor.getColumnIndex(DataBaseClassroom.COLUMN_ID));
+            String className = cursor.getString(cursor.getColumnIndex(DataBaseClassroom.COLUMN_NAME));
+            int classroomNumber = cursor.getInt(cursor.getColumnIndex(DataBaseClassroom.COLUMN_ROOM_NUMBER));
+            int classFloor = cursor.getInt(cursor.getColumnIndex(DataBaseClassroom.COLUMN_FLOOR_NUMBER));
+            int studentsNumber = cursor.getInt(cursor.getColumnIndex(DataBaseClassroom.COLUMN_STUDENTS_COUNT));
+            classroomModel = new ClassroomModel(idClass, className, classroomNumber,classFloor,studentsNumber);
+        }
+        cursor.close();
+        return classroomModel;
     }
 
 }
