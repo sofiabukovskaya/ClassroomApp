@@ -1,7 +1,8 @@
-package com.example.classroomapp;
+package com.example.classroomapp.classroom;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,24 +12,28 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.classroomapp.contract.MainContract;
+import com.example.classroomapp.R;
 import com.example.classroomapp.model.ClassroomModel;
 
 import java.util.List;
 
 public class ClassroomAdapter extends RecyclerView.Adapter<ClassroomAdapter.ViewHolder>  {
 
-    private MainContract.Presenter presenter;
     private RecyclerView recyclerView;
     private List<ClassroomModel> classroomModelList;
     private Context context;
+    private CallBackPosition callBackPosition;
     private Integer positionId;
 
-    public ClassroomAdapter(Context context, List<ClassroomModel> classroomModelList, RecyclerView recyclerView, MainContract.Presenter presenter){
+    public interface CallBackPosition{
+        void deleteClassGetPosition(int position);
+    }
+
+    public ClassroomAdapter(Context context, List<ClassroomModel> classroomModelList, RecyclerView recyclerView, CallBackPosition callBackPosition){
         this.context = context;
         this.classroomModelList = classroomModelList;
         this.recyclerView = recyclerView;
-        this.presenter  = presenter;
+        this.callBackPosition = callBackPosition;
     }
     @NonNull
     @Override
@@ -52,22 +57,21 @@ public class ClassroomAdapter extends RecyclerView.Adapter<ClassroomAdapter.View
         holder.deleteClass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.alertToDeleteClass(positionId);
+                callBackPosition.deleteClassGetPosition(positionId);
                 classroomModelList.remove(position);
             }
         });
         holder.editClass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.editCurrentClass(positionId);
-                notifyDataSetChanged();
+               passDataToEditClassroomActivity(classroom);
             }
         });
 
         holder.classroomName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.selectCurrentClass(positionId);
+                passDataToShowClassroomActivity(classroom);
             }
         });
     }
@@ -90,4 +94,24 @@ public class ClassroomAdapter extends RecyclerView.Adapter<ClassroomAdapter.View
         }
     }
 
+    public void passDataToShowClassroomActivity(ClassroomModel classroom){
+        Intent intent = new Intent(context, ShowCurrentClassActivity.class);
+        intent.putExtra("classroomId",classroom.getId());
+        intent.putExtra("classroomName", classroom.getClassroomName());
+        intent.putExtra("classroomRoom", classroom.getClassroomRoomNumber());
+        intent.putExtra("classroomFloor", classroom.getClassroomFloor());
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    public void passDataToEditClassroomActivity(ClassroomModel classroom){
+        Intent intent = new Intent(context, EditClassActivity.class);
+        intent.putExtra("classroomId",classroom.getId());
+        intent.putExtra("classroomName", classroom.getClassroomName());
+        intent.putExtra("classroomRoom", classroom.getClassroomRoomNumber());
+        intent.putExtra("classroomFloor", classroom.getClassroomFloor());
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+        notifyDataSetChanged();
+    }
 }

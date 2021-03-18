@@ -1,4 +1,4 @@
-package com.example.classroomapp;
+package com.example.classroomapp.classroom;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,12 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.classroomapp.contract.MainContract;
-import com.example.classroomapp.model.ClassroomModel;
-import com.example.classroomapp.presenter.MainPresenter;
+import com.example.classroomapp.R;
+import com.example.classroomapp.contract.EditClassroomContract;
+import com.example.classroomapp.presenter.EditClassPresenter;
 
-public class EditClassActivity extends AppCompatActivity implements MainContract.View{
-    private MainContract.Presenter presenter;
+public class EditClassActivity extends AppCompatActivity implements EditClassroomContract.View{
+    private EditClassroomContract.Presenter editClassroomPresenter;
 
     private EditText editClassroomName, editClassroomRoom, editClassroomFloor;
     private Button updateClassroomButton;
@@ -31,25 +31,24 @@ public class EditClassActivity extends AppCompatActivity implements MainContract
         editClassroomRoom = findViewById(R.id.edit_room_number);
         editClassroomFloor = findViewById(R.id.edit_floor);
         updateClassroomButton = findViewById(R.id.editClassroomButton);
-        presenter = new MainPresenter(this, getApplicationContext());
+        editClassroomPresenter = new EditClassPresenter(this, getApplicationContext());
+
         setEditsCurrentClass();
         updateClassroomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 progressDialog = ProgressDialog.show(EditClassActivity.this,"Editing class","editing...");
-                presenter.editButtonWasClicked(currentClassId,editClassroomName.getText().toString().trim(), Integer.parseInt(editClassroomRoom.getText().toString().trim()),
+                editClassroomPresenter.editButtonWasClicked(currentClassId,editClassroomName.getText().toString().trim(), Integer.parseInt(editClassroomRoom.getText().toString().trim()),
                         Integer.parseInt(editClassroomFloor.getText().toString().trim()));
             }
         });
     }
 
-
     public void setEditsCurrentClass(){
-        Intent intent = getIntent();
-        currentClassId = intent.getIntExtra("classroomId",0);
-        editClassroomName.setText(String.valueOf(intent.getStringExtra("classroomName")));
-        editClassroomRoom.setText(String.valueOf(intent.getIntExtra("classroomRoom",0)));
-        editClassroomFloor.setText(String.valueOf(intent.getIntExtra("classroomFloor",0)));
+        currentClassId = getIntent().getIntExtra("classroomId",0);
+        editClassroomName.setText(String.valueOf(getIntent().getStringExtra("classroomName")));
+        editClassroomRoom.setText(String.valueOf(getIntent().getIntExtra("classroomRoom",0)));
+        editClassroomFloor.setText(String.valueOf(getIntent().getIntExtra("classroomFloor",0)));
     }
 
     @Override
@@ -69,20 +68,4 @@ public class EditClassActivity extends AppCompatActivity implements MainContract
             }
         });
     }
-    
-    @Override
-    public void updateListAfterDeleting(int position) {
-
-    }
-
-    @Override
-    public void showCurrentClass(ClassroomModel currentClass) {
-
-    }
-
-    @Override
-    public void editCurrentClassShow(ClassroomModel currentClass) {
-
-    }
-
 }

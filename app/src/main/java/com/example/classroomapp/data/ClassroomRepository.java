@@ -5,13 +5,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.classroomapp.contract.AddClassroomContract;
+import com.example.classroomapp.contract.EditClassroomContract;
 import com.example.classroomapp.contract.MainContract;
 import com.example.classroomapp.model.ClassroomModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Repository implements MainContract.Repository {
+public class ClassroomRepository implements MainContract.Repository, EditClassroomContract.Repository, AddClassroomContract.Repository {
 
     private DataBaseClassroom dataBaseClassroom;
     private SQLiteDatabase sqLiteDatabase;
@@ -19,7 +21,7 @@ public class Repository implements MainContract.Repository {
     private ArrayList<ClassroomModel> classrooms;
 
 
-    public Repository(Context context) {
+    public ClassroomRepository(Context context) {
         dataBaseClassroom = new DataBaseClassroom(context.getApplicationContext());
     }
 
@@ -87,7 +89,6 @@ public class Repository implements MainContract.Repository {
 
     }
 
-    @Override
     public ClassroomModel getCurrentClass(int position) {
         ClassroomModel classroomModel = null;
         positionId = position;
@@ -105,5 +106,4 @@ public class Repository implements MainContract.Repository {
         cursor.close();
         return classroomModel;
     }
-
 }

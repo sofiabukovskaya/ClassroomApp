@@ -4,19 +4,17 @@ import com.example.classroomapp.model.ClassroomModel;
 
 import java.util.List;
 
-public interface MainContract {
+public interface AddClassroomContract {
 
     interface View {
         void onSuccess(String messageAlert);
     }
 
     interface Presenter{
-        List<ClassroomModel> loadAllDataInRecyclerView();
-        void alertToDeleteClass(int position);
+        void addButtonWasClicked(String name, int room, int floor);
     }
 
     interface Repository{
-        List<ClassroomModel> getListFromDataBase();
-        void deleteClass(int position);
+        long addClasses(ClassroomModel classroomModel);
     }
 }
