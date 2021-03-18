@@ -1,4 +1,4 @@
-package com.example.classroomapp.classroom;
+package com.example.classroomapp.classroom.mainPageClassroom;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -13,7 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.classroomapp.R;
+import com.example.classroomapp.classroom.editClassroom.EditClassActivity;
 import com.example.classroomapp.model.ClassroomModel;
+import com.example.classroomapp.student.mainPageStudent.CurrentClassAndStudentsActivity;
 
 import java.util.List;
 
@@ -95,7 +97,7 @@ public class ClassroomAdapter extends RecyclerView.Adapter<ClassroomAdapter.View
     }
 
     public void passDataToShowClassroomActivity(ClassroomModel classroom){
-        Intent intent = new Intent(context, ShowCurrentClassActivity.class);
+        Intent intent = new Intent(context, CurrentClassAndStudentsActivity.class);
         intent.putExtra("classroomId",classroom.getId());
         intent.putExtra("classroomName", classroom.getClassroomName());
         intent.putExtra("classroomRoom", classroom.getClassroomRoomNumber());

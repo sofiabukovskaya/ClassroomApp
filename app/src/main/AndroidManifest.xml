@@ -9,14 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ClassroomApp">
-        <activity android:name=".classroom.ShowCurrentClassActivity"></activity>
-        <activity android:name=".classroom.EditClassActivity" />
+        <activity android:name=".student.mainPageStudent.CurrentClassAndStudentsActivity"></activity>
+        <activity android:name=".classroom.editClassroom.EditClassActivity" />
         <activity
-            android:name=".classroom.AddClassroomActivity"
+            android:name=".classroom.addClassroom.AddClassroomActivity"
             android:label="Add classroom"
-            android:parentActivityName=".classroom.MainActivity" />
+            android:parentActivityName=".classroom.mainPageClassroom.MainActivity" />
         <activity
-            android:name=".classroom.MainActivity"
+            android:name=".classroom.mainPageClassroom.MainActivity"
             android:label="Classroom">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

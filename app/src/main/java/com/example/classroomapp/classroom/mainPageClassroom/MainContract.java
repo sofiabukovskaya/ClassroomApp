@@ -1,4 +1,4 @@
-package com.example.classroomapp.contract;
+package com.example.classroomapp.classroom.mainPageClassroom;
 
 import com.example.classroomapp.model.ClassroomModel;
 

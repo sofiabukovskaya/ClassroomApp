@@ -1,4 +1,4 @@
-package com.example.classroomapp.data;
+package com.example.classroomapp.data.classroomData;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 
 public class DataBaseClassroom extends SQLiteOpenHelper {
     private static final String DATABASE_NAME="classrooms_database.db";
-    static final String TABLE_NAME="classroom";
+    public static final String TABLE_NAME="classroom";
 
     //columns name
     public static final String COLUMN_ID="ID";

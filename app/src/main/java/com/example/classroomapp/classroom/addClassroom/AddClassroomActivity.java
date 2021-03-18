@@ -1,4 +1,4 @@
-package com.example.classroomapp.classroom;
+package com.example.classroomapp.classroom.addClassroom;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,8 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.classroomapp.R;
-import com.example.classroomapp.contract.AddClassroomContract;
-import com.example.classroomapp.presenter.AddClassroomPresenter;
+import com.example.classroomapp.classroom.mainPageClassroom.MainActivity;
 
 public class AddClassroomActivity extends AppCompatActivity implements AddClassroomContract.View {
     private AddClassroomContract.Presenter addClassroomPresenter;

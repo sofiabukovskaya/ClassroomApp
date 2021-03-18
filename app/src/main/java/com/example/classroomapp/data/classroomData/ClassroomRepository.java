@@ -1,13 +1,13 @@
-package com.example.classroomapp.data;
+package com.example.classroomapp.data.classroomData;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.classroomapp.contract.AddClassroomContract;
-import com.example.classroomapp.contract.EditClassroomContract;
-import com.example.classroomapp.contract.MainContract;
+import com.example.classroomapp.classroom.addClassroom.AddClassroomContract;
+import com.example.classroomapp.classroom.editClassroom.EditClassroomContract;
+import com.example.classroomapp.classroom.mainPageClassroom.MainContract;
 import com.example.classroomapp.model.ClassroomModel;
 
 import java.util.ArrayList;

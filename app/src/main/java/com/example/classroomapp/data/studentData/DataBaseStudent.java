@@ -1,4 +1,4 @@
-package com.example.classroomapp.data;
+package com.example.classroomapp.data.studentData;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -6,10 +6,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.example.classroomapp.data.classroomData.DataBaseClassroom;
+
 public class DataBaseStudent extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME="classrooms_database.db";
     static final String TABLE_NAME="students";
+
 
     //columns name
     public static final String COLUMN_ID="ID";
@@ -27,6 +30,15 @@ public class DataBaseStudent extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
+        db.execSQL("CREATE TABLE " + TABLE_NAME +
+                " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_NAME + " TEXT, " +
+                COLUMN_LAST_NAME+ " TEXT, " +
+                COLUMN_MIDDLE_NAME + " TEXT, " +
+                COLUMN_STUDENT_GENDER + " TEXT, " +
+                COLUMN_STUDENT_AGE + " INTEGER, " +
+                COLUMN_CLASSROOM_ID + " INTEGER, " +
+                " FOREIGN KEY ("+COLUMN_CLASSROOM_ID+") REFERENCES "+ DataBaseClassroom.TABLE_NAME+"("+DataBaseClassroom.COLUMN_ID+"));");
     }
 
     @Override

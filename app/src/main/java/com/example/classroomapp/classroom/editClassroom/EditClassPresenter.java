@@ -1,10 +1,8 @@
-package com.example.classroomapp.presenter;
+package com.example.classroomapp.classroom.editClassroom;
 
 import android.content.Context;
 
-import com.example.classroomapp.contract.EditClassroomContract;
-import com.example.classroomapp.contract.MainContract;
-import com.example.classroomapp.data.ClassroomRepository;
+import com.example.classroomapp.data.classroomData.ClassroomRepository;
 import com.example.classroomapp.model.ClassroomModel;
 
 public class EditClassPresenter implements EditClassroomContract.Presenter {
