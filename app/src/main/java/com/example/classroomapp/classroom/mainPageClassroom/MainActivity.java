@@ -33,12 +33,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         floatingActionButton = findViewById(R.id.floatingActionButton);
         presenter = new MainPresenter(this, getApplicationContext());
-
         recyclerView.setHasFixedSize(true);
         classroomAdapter = new ClassroomAdapter(getApplicationContext(), presenter.loadAllDataInRecyclerView(), recyclerView, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(classroomAdapter);
-
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                         progressDialog = ProgressDialog.show(MainActivity.this,"Deleting class","deleting...");
                         presenter.alertToDeleteClass(position);
                         classroomAdapter.notifyItemRemoved(position);
+                        recyclerView.scheduleLayoutAnimation();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
