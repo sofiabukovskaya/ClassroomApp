@@ -17,6 +17,9 @@ public interface CurrentClassAndStudentsContract {
     }
 
     interface Repository{
-        List<ClassroomModel> getListFromDataBase();
+        List<StudentModel> getAllStudentsFromDatabase();
+        List<StudentModel> getStudentsFromCurrentClass();
+        void deleteStudentFromClass(int position);
+        boolean IsTableEmpty();
     }
 }

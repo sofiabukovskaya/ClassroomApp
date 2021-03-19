@@ -5,11 +5,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.example.classroomapp.R;
+import com.example.classroomapp.student.addStudent.AddStudentActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class CurrentClassAndStudentsActivity extends AppCompatActivity implements CurrentClassAndStudentsContract.View {
@@ -33,7 +35,8 @@ public class CurrentClassAndStudentsActivity extends AppCompatActivity implement
         floatingActionButton = findViewById(R.id.floatingActionButtonStudents);
         recyclerViewStudents = findViewById(R.id.recyclerViewStudents);
         recyclerViewStudents.setHasFixedSize(true);
-        studentPresenter = new CurrentClassAndStudentsPresenter();
+
+        studentPresenter = new CurrentClassAndStudentsPresenter(this, getApplicationContext());
 
         studentAdapter = new StudentAdapter(getApplicationContext(), studentPresenter.loadAllDataInRecyclerView(), recyclerViewStudents);
         recyclerViewStudents.setLayoutManager(new LinearLayoutManager(this));
@@ -44,7 +47,8 @@ public class CurrentClassAndStudentsActivity extends AppCompatActivity implement
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                    Intent intent = new Intent(CurrentClassAndStudentsActivity.this, AddStudentActivity.class);
+                    startActivity(intent);
             }
         });
     }

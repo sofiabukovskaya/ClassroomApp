@@ -37,8 +37,11 @@ public class DataBaseStudent extends SQLiteOpenHelper {
                 COLUMN_MIDDLE_NAME + " TEXT, " +
                 COLUMN_STUDENT_GENDER + " TEXT, " +
                 COLUMN_STUDENT_AGE + " INTEGER, " +
-                COLUMN_CLASSROOM_ID + " INTEGER, " +
-                " FOREIGN KEY ("+COLUMN_CLASSROOM_ID+") REFERENCES "+ DataBaseClassroom.TABLE_NAME+"("+DataBaseClassroom.COLUMN_ID+"));");
+                COLUMN_CLASSROOM_ID + " INTEGER);");
+
+        db.execSQL("INSERT INTO "+ TABLE_NAME +" (" + COLUMN_NAME
+                + ", " + COLUMN_LAST_NAME  + ","  + COLUMN_MIDDLE_NAME + ", " + COLUMN_STUDENT_GENDER + ", " + COLUMN_STUDENT_AGE
+                + ", " + COLUMN_CLASSROOM_ID + ") VALUES ('SS','sss', 'sss', 's', 1981, 1);");
     }
 
     @Override

@@ -39,7 +39,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return 0;
+        return studentModelList == null ? 0 : studentModelList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
