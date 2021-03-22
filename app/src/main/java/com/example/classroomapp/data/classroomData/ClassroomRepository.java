@@ -41,6 +41,7 @@ public class ClassroomRepository implements MainContract.Repository, EditClassro
     public List<ClassroomModel> getListFromDataBase() {
         classrooms = new ArrayList<>();
         Cursor cursor = getAllEntries();
+
         while (cursor.moveToNext()){
             int id = cursor.getInt(cursor.getColumnIndex(DataBaseClassroom.COLUMN_ID));
             String name = cursor.getString(cursor.getColumnIndex(DataBaseClassroom.COLUMN_NAME));

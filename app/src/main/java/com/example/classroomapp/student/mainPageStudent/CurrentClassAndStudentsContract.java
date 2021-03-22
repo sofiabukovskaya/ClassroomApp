@@ -1,5 +1,7 @@
 package com.example.classroomapp.student.mainPageStudent;
 
+import android.database.Cursor;
+
 import com.example.classroomapp.model.ClassroomModel;
 import com.example.classroomapp.model.StudentModel;
 
@@ -12,14 +14,14 @@ public interface CurrentClassAndStudentsContract {
     }
 
     interface Presenter{
-        List<StudentModel> loadAllDataInRecyclerView();
+        List<StudentModel> loadAllDataInRecyclerView(int position);
         void alertToDeleteClass(int position);
     }
 
     interface Repository{
         List<StudentModel> getAllStudentsFromDatabase();
-        List<StudentModel> getStudentsFromCurrentClass();
+        List<StudentModel> getStudentsFromCurrentClass(int classroomId);
         void deleteStudentFromClass(int position);
-        boolean IsTableEmpty();
+
     }
 }

@@ -1,5 +1,6 @@
 package com.example.classroomapp.student.mainPageStudent;
 
+import androidx.annotation.IntRange;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,8 +12,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.classroomapp.R;
+import com.example.classroomapp.model.ClassroomModel;
 import com.example.classroomapp.student.addStudent.AddStudentActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 public class CurrentClassAndStudentsActivity extends AppCompatActivity implements CurrentClassAndStudentsContract.View {
 
@@ -22,7 +26,7 @@ public class CurrentClassAndStudentsActivity extends AppCompatActivity implement
     private FloatingActionButton floatingActionButton;
     private StudentAdapter studentAdapter;
     private RecyclerView recyclerViewStudents;
-
+    private Integer classroomId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,8 +41,8 @@ public class CurrentClassAndStudentsActivity extends AppCompatActivity implement
         recyclerViewStudents.setHasFixedSize(true);
 
         studentPresenter = new CurrentClassAndStudentsPresenter(this, getApplicationContext());
-
-        studentAdapter = new StudentAdapter(getApplicationContext(), studentPresenter.loadAllDataInRecyclerView(), recyclerViewStudents);
+        classroomId = getIntent().getIntExtra("classroomId",0);
+        studentAdapter = new StudentAdapter(getApplicationContext(), studentPresenter.loadAllDataInRecyclerView(classroomId), recyclerViewStudents);
         recyclerViewStudents.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewStudents.setAdapter(studentAdapter);
 
@@ -48,6 +52,7 @@ public class CurrentClassAndStudentsActivity extends AppCompatActivity implement
             @Override
             public void onClick(View v) {
                     Intent intent = new Intent(CurrentClassAndStudentsActivity.this, AddStudentActivity.class);
+                    intent.putExtra("classroomPosition",classroomId);
                     startActivity(intent);
             }
         });

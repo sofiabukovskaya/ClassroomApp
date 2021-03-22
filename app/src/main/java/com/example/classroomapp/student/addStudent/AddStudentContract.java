@@ -1,6 +1,9 @@
 package com.example.classroomapp.student.addStudent;
 
+import android.database.Cursor;
+
 import com.example.classroomapp.model.ClassroomModel;
+import com.example.classroomapp.model.StudentModel;
 
 public interface AddStudentContract {
 
@@ -9,10 +12,10 @@ public interface AddStudentContract {
     }
 
     interface Presenter{
-        void addButtonWasClicked(String name, int room, int floor);
+        void addButtonWasClicked(String name, String lastName, String middleName, String gender, int age, int position);
     }
 
     interface Repository{
-        long addClasses(ClassroomModel classroomModel);
+        long addStudent(StudentModel studentModel);
     }
 }

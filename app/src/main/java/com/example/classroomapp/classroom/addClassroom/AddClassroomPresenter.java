@@ -22,7 +22,7 @@ public class AddClassroomPresenter implements AddClassroomContract.Presenter {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                classroomModel = new ClassroomModel(0, name, room, floor,0);
+                classroomModel = new ClassroomModel(0, name, room, floor, 0);
                 repository.addClasses(classroomModel);
                 view.onSuccess("New class is added!");
             }

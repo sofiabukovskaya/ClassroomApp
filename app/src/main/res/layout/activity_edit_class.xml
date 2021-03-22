@@ -56,14 +56,14 @@
         android:id="@+id/edit_room_number"
         android:layout_width="212dp"
         android:layout_height="33dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="60dp"
         android:background="@drawable/border"
         android:ems="10"
         android:hint="Room number"
         android:inputType="number"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_name_classroom" />
 

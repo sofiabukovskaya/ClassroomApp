@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         floatingActionButton = findViewById(R.id.floatingActionButton);
         presenter = new MainPresenter(this, getApplicationContext());
-        recyclerView.setHasFixedSize(true);
         classroomAdapter = new ClassroomAdapter(getApplicationContext(), presenter.loadAllDataInRecyclerView(), recyclerView, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(classroomAdapter);

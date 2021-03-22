@@ -22,10 +22,13 @@
             android:text="1"
             android:textSize="20dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/student_name"
-            app:layout_constraintTop_toTopOf="@+id/student_name"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="-2dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.03"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.487"
+            tools:ignore="MissingConstraints" />
 
         <TextView
             android:id="@+id/student_name"
@@ -38,8 +41,8 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/student_id"
+            app:layout_constraintHorizontal_bias="0.092"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.486" />
 
@@ -51,10 +54,12 @@
             android:textSize="20dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.584"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.447"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="127dp" />
+            app:layout_constraintVertical_bias="0.473"
+            tools:ignore="MissingConstraints" />
 
         <ImageButton
             android:id="@+id/buttonEditStudent"

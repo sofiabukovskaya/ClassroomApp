@@ -24,12 +24,11 @@ public class CurrentClassAndStudentsPresenter implements CurrentClassAndStudents
     }
 
     @Override
-    public List<StudentModel> loadAllDataInRecyclerView() {
-            return studentRepository.getAllStudentsFromDatabase();
+    public List<StudentModel> loadAllDataInRecyclerView(int classroomId) {
+            return studentRepository.getStudentsFromCurrentClass(classroomId);
     }
 
     @Override
     public void alertToDeleteClass(int position) {
-
     }
 }

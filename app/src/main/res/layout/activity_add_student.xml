@@ -76,7 +76,7 @@
         app:layout_constraintTop_toBottomOf="@+id/add_first_name_student" />
 
     <Button
-        android:id="@+id/addClassroomButton"
+        android:id="@+id/add_student_button"
         android:layout_width="216dp"
         android:layout_height="65dp"
         android:text="Add new student"
