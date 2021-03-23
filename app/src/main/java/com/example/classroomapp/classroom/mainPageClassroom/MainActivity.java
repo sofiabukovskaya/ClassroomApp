@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                         progressDialog = ProgressDialog.show(MainActivity.this,"Deleting class","deleting...");
                         presenter.alertToDeleteClass(position);
                         classroomAdapter.notifyItemRemoved(position);
-                        recyclerView.scheduleLayoutAnimation();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {

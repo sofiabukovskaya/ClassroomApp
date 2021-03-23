@@ -9,13 +9,14 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.classroomapp.data.classroomData.DataBaseClassroom;
 import com.example.classroomapp.model.StudentModel;
 import com.example.classroomapp.student.addStudent.AddStudentContract;
+import com.example.classroomapp.student.editStudent.EditStudentContract;
 import com.example.classroomapp.student.mainPageStudent.CurrentClassAndStudentsContract;
 import com.example.classroomapp.model.ClassroomModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentRepository implements CurrentClassAndStudentsContract.Repository, AddStudentContract.Repository {
+public class StudentRepository implements CurrentClassAndStudentsContract.Repository, AddStudentContract.Repository, EditStudentContract.Repository {
 
     private DataBaseStudent dataBaseStudent;
     private SQLiteDatabase sqLiteDatabase;
@@ -95,4 +96,16 @@ public class StudentRepository implements CurrentClassAndStudentsContract.Reposi
     }
 
 
+    @Override
+    public long updateStudent(StudentModel studentModel) {
+        sqLiteDatabase = dataBaseStudent.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DataBaseStudent.COLUMN_NAME, studentModel.getFirstName());
+        contentValues.put(DataBaseStudent.COLUMN_LAST_NAME, studentModel.getLastName());
+        contentValues.put(DataBaseStudent.COLUMN_MIDDLE_NAME, studentModel.getMiddleName());
+        contentValues.put(DataBaseStudent.COLUMN_STUDENT_GENDER, studentModel.getStudentGender());
+        contentValues.put(DataBaseStudent.COLUMN_STUDENT_AGE, studentModel.getStudentAge());
+        return sqLiteDatabase.update(DataBaseStudent.TABLE_NAME, contentValues,DataBaseStudent.COLUMN_ID + " = " +  studentModel.getStudentId(),null);
+
+    }
 }

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -75,9 +76,9 @@ public class AddStudentActivity extends AppCompatActivity implements AddStudentC
                     public void run() {
                         Toast.makeText(AddStudentActivity.this, messageAlert, Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
-                        startActivity(new Intent(AddStudentActivity.this, CurrentClassAndStudentsActivity.class));
+                        startActivity(new Intent(AddStudentActivity.this, MainActivity.class));
                     }
-                },2000);
+                },1000);
             }
         });
     }

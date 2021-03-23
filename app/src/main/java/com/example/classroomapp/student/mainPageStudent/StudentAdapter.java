@@ -2,6 +2,7 @@ package com.example.classroomapp.student.mainPageStudent;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.classroomapp.R;
+import com.example.classroomapp.classroom.editClassroom.EditClassActivity;
 import com.example.classroomapp.model.ClassroomModel;
 import com.example.classroomapp.model.StudentModel;
+import com.example.classroomapp.student.editStudent.EditStudentActivity;
 
 import java.util.List;
 
@@ -48,13 +51,11 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         StudentModel studentModel = studentModelList.get(position);
 
-
         holder.studentFirstName.setText(studentModel.getFirstName());
         holder.studentId.setText(Integer.toString(position + 1));
         holder.studentSecondName.setText(studentModel.getLastName());
         holder.deleteStudent.setImageResource(R.drawable.delete_forever_24);
         holder.editStudent.setImageResource(R.drawable.edit_);
-
         holder.deleteStudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,7 +68,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
         holder.editStudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                passDataToEditStudentInfo(studentModel);
             }
         });
     }
@@ -88,5 +89,18 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
             editStudent = itemView.findViewById(R.id.buttonEditStudent);
             deleteStudent = itemView.findViewById(R.id.buttonDeleteStudent);
         }
+    }
+
+    public void passDataToEditStudentInfo(StudentModel studentModel){
+        Intent intent = new Intent(context, EditStudentActivity.class);
+        intent.putExtra("studentId",studentModel.getStudentId());
+        intent.putExtra("studentFirstName", studentModel.getFirstName());
+        intent.putExtra("studentLastName", studentModel.getLastName());
+        intent.putExtra("studentMiddleName", studentModel.getMiddleName());
+        intent.putExtra("studentGender", studentModel.getStudentGender());
+        intent.putExtra("studentAge", studentModel.getStudentAge());
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+        notifyDataSetChanged();
     }
 }

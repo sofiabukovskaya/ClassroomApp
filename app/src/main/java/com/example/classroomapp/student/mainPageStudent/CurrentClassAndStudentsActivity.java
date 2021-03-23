@@ -1,6 +1,7 @@
 package com.example.classroomapp.student.mainPageStudent;
 
 import androidx.annotation.IntRange;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +36,7 @@ public class CurrentClassAndStudentsActivity extends AppCompatActivity implement
     private RecyclerView recyclerViewStudents;
     private Integer classroomId;
     private ProgressDialog progressDialog;
-
+    private  ArrayList<ClassroomModel> currentClassModel = new ArrayList<ClassroomModel>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +71,7 @@ public class CurrentClassAndStudentsActivity extends AppCompatActivity implement
 
     @SuppressLint("SetTextI18n")
     public void getInformationAboutCurrentClassroom(){
+
         currentClassID.setText(String.valueOf(getIntent().getIntExtra("classroomId",0)));
         currentClassName.setText(String.valueOf(getIntent().getStringExtra("classroomName")));
         currentClassCabinet.setText("# " +String.valueOf(getIntent().getIntExtra("classroomRoom",0)));
@@ -76,7 +79,11 @@ public class CurrentClassAndStudentsActivity extends AppCompatActivity implement
         currentClassStudents.setText(String.valueOf(getIntent().getIntExtra("classroomStudentCount",0)) + " students");
     }
 
-
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+//        outState.putString();
+    }
 
     @Override
     public void deleteStudentGetPosition(int position) {
@@ -116,5 +123,6 @@ public class CurrentClassAndStudentsActivity extends AppCompatActivity implement
             }
         });
     }
+
 
 }
