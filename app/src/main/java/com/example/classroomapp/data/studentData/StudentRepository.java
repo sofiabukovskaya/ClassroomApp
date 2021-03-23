@@ -36,34 +36,15 @@ public class StudentRepository implements CurrentClassAndStudentsContract.Reposi
         return cursor;
     }
 
-
-    @Override
-    public List<StudentModel> getAllStudentsFromDatabase() {
-        studentModelArrayList = new ArrayList<>();
-        Cursor cursor = getAllEntries();
-        while (cursor.moveToNext()) {
-            int id = cursor.getInt(cursor.getColumnIndex(DataBaseStudent.COLUMN_ID));
-            String firstName = cursor.getString(cursor.getColumnIndex(DataBaseStudent.COLUMN_NAME));
-            String lastName = cursor.getString(cursor.getColumnIndex(DataBaseStudent.COLUMN_LAST_NAME));
-            String middleName = cursor.getString(cursor.getColumnIndex(DataBaseStudent.COLUMN_MIDDLE_NAME));
-            String gender = cursor.getString(cursor.getColumnIndex(DataBaseStudent.COLUMN_STUDENT_GENDER));
-            int ageStudent = cursor.getInt(cursor.getColumnIndex(DataBaseStudent.COLUMN_STUDENT_AGE));
-            int classroomId = cursor.getInt(cursor.getColumnIndex(DataBaseStudent.COLUMN_CLASSROOM_ID));
-            studentModelArrayList.add(new StudentModel(id, firstName, lastName, middleName, gender, ageStudent, classroomId));
-        }
-        cursor.close();
-        return studentModelArrayList;
-    }
-
     @Override
     public List<StudentModel> getStudentsFromCurrentClass(int classroomId) {
         studentModelArrayList = new ArrayList<>();
+
         String query = "SELECT * FROM " + DataBaseStudent.TABLE_NAME +
                 " INNER JOIN " + DataBaseClassroom.TABLE_NAME +
                 " ON " + DataBaseClassroom.TABLE_NAME + "." + DataBaseClassroom.COLUMN_ID + "=" + DataBaseStudent.TABLE_NAME + "." + DataBaseStudent.COLUMN_CLASSROOM_ID +
                 " WHERE " + DataBaseStudent.TABLE_NAME + "." + DataBaseStudent.COLUMN_CLASSROOM_ID + "=" + classroomId;
-
-        String countQuery = "SELECT "+ DataBaseStudent.COLUMN_ID +" FROM " + DataBaseStudent.TABLE_NAME;
+        String countQuery = "SELECT "+ DataBaseStudent.COLUMN_ID +" FROM " + DataBaseStudent.TABLE_NAME + " WHERE " + DataBaseStudent.TABLE_NAME + "." + DataBaseStudent.COLUMN_CLASSROOM_ID + "=" + classroomId ;
         SQLiteDatabase db = dataBaseStudent.getReadableDatabase();
         Cursor cursorCount = db.rawQuery(countQuery, null);
         int count = cursorCount.getCount();
@@ -90,7 +71,13 @@ public class StudentRepository implements CurrentClassAndStudentsContract.Reposi
 
     @Override
     public void deleteStudentFromClass(int position) {
+        sqLiteDatabase = dataBaseStudent.getWritableDatabase();
 
+        sqLiteDatabase.execSQL("DELETE FROM " + DataBaseStudent.TABLE_NAME + " WHERE " + DataBaseStudent.TABLE_NAME + "." +
+                DataBaseStudent.COLUMN_ID + " = " + position + ";");
+        sqLiteDatabase.execSQL("UPDATE " + DataBaseStudent.TABLE_NAME + " SET " +  DataBaseStudent.COLUMN_ID + " = " +
+                DataBaseStudent.COLUMN_ID + " -1 " + " WHERE " + DataBaseStudent.COLUMN_ID + " > " + position + ";");
+        sqLiteDatabase.close();
     }
 
     @Override

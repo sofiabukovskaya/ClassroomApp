@@ -30,5 +30,13 @@ public class CurrentClassAndStudentsPresenter implements CurrentClassAndStudents
 
     @Override
     public void alertToDeleteClass(int position) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                studentRepository.deleteStudentFromClass(position);
+                view.onSuccess("Your class is deleted!");
+            }
+        }).start();
+
     }
 }

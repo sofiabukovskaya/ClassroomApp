@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ClassroomApp">
-        <activity android:name=".student.addStudent.AddStudentActivity"></activity>
+        <activity android:name=".student.editStudent.EditStudentActivity"></activity>
+        <activity android:name=".student.addStudent.AddStudentActivity"
+            android:label="Add new student to classroom"
+            android:parentActivityName=".student.mainPageStudent.CurrentClassAndStudentsActivity"/>
         <activity
             android:name=".student.mainPageStudent.CurrentClassAndStudentsActivity"
             android:label="Classroom and students"

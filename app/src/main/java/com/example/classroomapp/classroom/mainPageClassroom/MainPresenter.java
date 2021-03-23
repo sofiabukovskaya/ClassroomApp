@@ -19,7 +19,7 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public List<ClassroomModel> loadAllDataInRecyclerView() {
-        return repository.getListFromDataBase();
+      return repository.getListFromDataBase();
     }
 
     @Override

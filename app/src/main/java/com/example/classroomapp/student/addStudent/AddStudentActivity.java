@@ -18,6 +18,7 @@ import com.example.classroomapp.classroom.addClassroom.AddClassroomActivity;
 import com.example.classroomapp.classroom.addClassroom.AddClassroomPresenter;
 import com.example.classroomapp.classroom.mainPageClassroom.ClassroomAdapter;
 import com.example.classroomapp.classroom.mainPageClassroom.MainActivity;
+import com.example.classroomapp.student.mainPageStudent.CurrentClassAndStudentsActivity;
 
 public class AddStudentActivity extends AppCompatActivity implements AddStudentContract.View {
 
@@ -40,6 +41,7 @@ public class AddStudentActivity extends AppCompatActivity implements AddStudentC
         ageStudent = findViewById(R.id.add_age_student);
         addStudentButton = findViewById(R.id.add_student_button);
         genderSpinner = findViewById(R.id.spinner_gender);
+
         spinnerValueGender = new String[]{
                 "Female",
                 "Male"
@@ -73,12 +75,10 @@ public class AddStudentActivity extends AppCompatActivity implements AddStudentC
                     public void run() {
                         Toast.makeText(AddStudentActivity.this, messageAlert, Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
-                        startActivity(new Intent(AddStudentActivity.this, MainActivity.class));
+                        startActivity(new Intent(AddStudentActivity.this, CurrentClassAndStudentsActivity.class));
                     }
                 },2000);
             }
         });
     }
-
-
 }

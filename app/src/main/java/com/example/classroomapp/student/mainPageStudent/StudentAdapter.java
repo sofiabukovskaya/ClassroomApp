@@ -21,12 +21,18 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
     private Context context;
     private RecyclerView recyclerView;
     private List<StudentModel> studentModelList;
-    Integer positionIdStudent;
+    Integer positionIdStudent = 0;
+    CallBackPosition callBackPosition;
 
-    public StudentAdapter(Context context, List<StudentModel> studentModelList, RecyclerView recyclerView) {
+    public interface CallBackPosition{
+        void deleteStudentGetPosition(int position);
+    }
+
+    public StudentAdapter(Context context, List<StudentModel> studentModelList, RecyclerView recyclerView, CallBackPosition callBackPosition) {
         this.context = context;
         this.studentModelList = studentModelList;
         this.recyclerView = recyclerView;
+        this.callBackPosition = callBackPosition;
     }
 
     @NonNull
@@ -41,13 +47,29 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         StudentModel studentModel = studentModelList.get(position);
-        positionIdStudent = studentModelList.get(position).getStudentId();
+
 
         holder.studentFirstName.setText(studentModel.getFirstName());
-        holder.studentId.setText(studentModel.getStudentId() + " ");
-        holder.studentSecondName.setText(studentModel.getLastName() + " ");
+        holder.studentId.setText(Integer.toString(position + 1));
+        holder.studentSecondName.setText(studentModel.getLastName());
         holder.deleteStudent.setImageResource(R.drawable.delete_forever_24);
         holder.editStudent.setImageResource(R.drawable.edit_);
+
+        holder.deleteStudent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                positionIdStudent = studentModel.getStudentId();
+                callBackPosition.deleteStudentGetPosition(positionIdStudent);
+                studentModelList.remove(position);
+            }
+        });
+
+        holder.editStudent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override

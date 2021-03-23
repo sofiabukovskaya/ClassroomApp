@@ -19,9 +19,7 @@ public interface CurrentClassAndStudentsContract {
     }
 
     interface Repository{
-        List<StudentModel> getAllStudentsFromDatabase();
         List<StudentModel> getStudentsFromCurrentClass(int classroomId);
         void deleteStudentFromClass(int position);
-
     }
 }

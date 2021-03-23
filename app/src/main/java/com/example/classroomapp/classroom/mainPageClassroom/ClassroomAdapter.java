@@ -51,9 +51,9 @@ public class ClassroomAdapter extends RecyclerView.Adapter<ClassroomAdapter.View
         ClassroomModel classroom = classroomModelList.get(position);
         positionId = classroomModelList.get(position).getId();
 
-        holder.classroomId.setText(classroom.getId() + " ");
+        holder.classroomId.setText(Integer.toString(classroom.getId()));
         holder.classroomName.setText(classroom.getClassroomName());
-        holder.classroomNumberCabinet.setText(classroom.getClassroomRoomNumber() + " ");
+        holder.classroomNumberCabinet.setText(Integer.toString(classroom.getClassroomRoomNumber()));
         holder.deleteClass.setImageResource(R.drawable.delete_forever_24);
         holder.editClass.setImageResource(R.drawable.edit_);
         holder.deleteClass.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +102,7 @@ public class ClassroomAdapter extends RecyclerView.Adapter<ClassroomAdapter.View
         intent.putExtra("classroomName", classroom.getClassroomName());
         intent.putExtra("classroomRoom", classroom.getClassroomRoomNumber());
         intent.putExtra("classroomFloor", classroom.getClassroomFloor());
+        intent.putExtra("classroomStudentCount", classroom.getStudentCount());
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
