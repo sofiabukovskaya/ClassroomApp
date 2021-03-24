@@ -12,8 +12,8 @@ public class AddClassroomPresenter implements AddClassroomContract.Presenter {
     AddClassroomContract.Repository repository;
     ClassroomModel classroomModel;
 
-    public AddClassroomPresenter(AddClassroomContract.View view, Context context) {
-        this.view = view;
+    public AddClassroomPresenter(AddClassroomContract.View callback, Context context) {
+        this.view = callback;
         this.repository = new ClassroomRepository(context);
     }
 

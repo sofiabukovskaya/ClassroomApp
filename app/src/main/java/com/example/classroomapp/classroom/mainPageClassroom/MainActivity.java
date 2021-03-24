@@ -15,12 +15,17 @@ import android.widget.Toast;
 
 import com.example.classroomapp.R;
 import com.example.classroomapp.classroom.addClassroom.AddClassroomActivity;
+import com.example.classroomapp.classroom.editClassroom.EditClassActivity;
+import com.example.classroomapp.model.ClassroomModel;
+import com.example.classroomapp.student.mainPageStudent.CurrentClassAndStudentsActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements MainContract.View, ClassroomAdapter.CallBackPosition {
 
-    MainContract.Presenter presenter;
-    public RecyclerView recyclerView;
+    MainContract.Presenter mainContractPresenter;
+    private RecyclerView recyclerView;
     public FloatingActionButton floatingActionButton;
     public ClassroomAdapter classroomAdapter;
     private ProgressDialog progressDialog;
@@ -32,8 +37,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         recyclerView = findViewById(R.id.recyclerView);
 
         floatingActionButton = findViewById(R.id.floatingActionButton);
-        presenter = new MainPresenter(this, getApplicationContext());
-        classroomAdapter = new ClassroomAdapter(getApplicationContext(), presenter.loadAllDataInRecyclerView(), recyclerView, this);
+        mainContractPresenter = new MainPresenter(this, this);
+        classroomAdapter = new ClassroomAdapter(getApplicationContext(), mainContractPresenter.loadAllDataInRecyclerView(), recyclerView, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(classroomAdapter);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -47,31 +52,26 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void onSuccess(String messageAlert) {
-        runOnUiThread(new Runnable() {
+        Handler handler = new Handler(getMainLooper());
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(MainActivity.this, messageAlert, Toast.LENGTH_SHORT).show();
-                        progressDialog.dismiss();
-                    }
-                },1000);
+                Toast.makeText(MainActivity.this, messageAlert, Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
             }
-        });
+        }, 1000);
     }
 
     @Override
-     public void deleteClassGetPosition(int position) {
+    public void deleteClassGetPosition(int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Are you sure you want to delete this classroom?")
                 .setMessage("Please, select")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        progressDialog = ProgressDialog.show(MainActivity.this,"Deleting class","deleting...");
-                        presenter.alertToDeleteClass(position);
+                        progressDialog = ProgressDialog.show(MainActivity.this, "Deleting class", "deleting...");
+                        mainContractPresenter.alertToDeleteClass(position);
                         classroomAdapter.notifyItemRemoved(position);
                     }
                 })
@@ -83,4 +83,30 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 });
         builder.create().show();
     }
+
+    @Override
+    public void showCurrentClass(ClassroomModel classroomModel) {
+
+        Intent intent = new Intent(MainActivity.this, CurrentClassAndStudentsActivity.class);
+        intent.putExtra("classroomId",classroomModel.getId());
+        intent.putExtra("classroomName", classroomModel.getClassroomName());
+        intent.putExtra("classroomRoom", classroomModel.getClassroomRoomNumber());
+        intent.putExtra("classroomFloor", classroomModel.getClassroomFloor());
+        intent.putExtra("classroomStudentCount", classroomModel.getStudentCount());
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    @Override
+    public void editCurrentClass(ClassroomModel classroomModel) {
+        Intent intent = new Intent(MainActivity.this, EditClassActivity.class);
+        intent.putExtra("classroomId",classroomModel.getId());
+        intent.putExtra("classroomName", classroomModel.getClassroomName());
+        intent.putExtra("classroomRoom", classroomModel.getClassroomRoomNumber());
+        intent.putExtra("classroomFloor", classroomModel.getClassroomFloor());
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        classroomAdapter.notifyDataSetChanged();
+    }
+
 }

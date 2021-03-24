@@ -13,8 +13,8 @@ public class AddStudentPresenter implements AddStudentContract.Presenter {
     AddStudentContract.Repository repository;
     StudentModel studentModel;
 
-    public AddStudentPresenter(AddStudentContract.View view, Context context) {
-        this.view = view;
+    public AddStudentPresenter(AddStudentContract.View callback, Context context) {
+        this.view = callback;
         this.repository = new StudentRepository(context);
     }
 

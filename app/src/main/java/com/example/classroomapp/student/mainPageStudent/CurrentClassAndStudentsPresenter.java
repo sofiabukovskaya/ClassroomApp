@@ -18,8 +18,8 @@ public class CurrentClassAndStudentsPresenter implements CurrentClassAndStudents
     CurrentClassAndStudentsContract.View view;
     CurrentClassAndStudentsContract.Repository studentRepository;
 
-    public CurrentClassAndStudentsPresenter(CurrentClassAndStudentsContract.View view, Context context) {
-        this.view = view;
+    public CurrentClassAndStudentsPresenter(CurrentClassAndStudentsContract.View callback, Context context) {
+        this.view = callback;
         this.studentRepository = new StudentRepository(context);
     }
 

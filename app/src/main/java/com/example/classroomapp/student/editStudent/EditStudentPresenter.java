@@ -15,8 +15,8 @@ public class EditStudentPresenter implements EditStudentContract.Presenter {
     EditStudentContract.Repository repository;
     StudentModel studentModel;
 
-    public EditStudentPresenter(EditStudentContract.View view, Context context) {
-        this.view = view;
+    public EditStudentPresenter(EditStudentContract.View callback, Context context) {
+        this.view = callback;
         this.repository = new StudentRepository(context);
     }
 

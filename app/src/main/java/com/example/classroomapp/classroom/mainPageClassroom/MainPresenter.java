@@ -12,8 +12,8 @@ public class MainPresenter implements MainContract.Presenter {
     MainContract.View view;
     MainContract.Repository repository;
 
-    public MainPresenter(MainContract.View view, Context context) {
-        this.view = view;
+    public MainPresenter(MainContract.View callback, Context context) {
+        this.view = callback;
         this.repository =  new ClassroomRepository(context);
     }
 

@@ -21,6 +21,7 @@ import com.example.classroomapp.student.addStudent.GenderSpinnerAdapter;
 import com.example.classroomapp.student.mainPageStudent.CurrentClassAndStudentsActivity;
 
 public class EditStudentActivity extends AppCompatActivity implements EditStudentContract.View {
+
     private EditText firstNameStudent, secondNameStudent, middleNameStudent, ageStudent;
     private Spinner genderStudent;
     private Button editStudentInfo;

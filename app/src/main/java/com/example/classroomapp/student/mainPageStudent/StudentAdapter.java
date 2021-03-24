@@ -29,6 +29,8 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
 
     public interface CallBackPosition{
         void deleteStudentGetPosition(int position);
+        void showCurrentStudent(StudentModel studentModel);
+        void editStudentInformation(StudentModel studentModel);
     }
 
     public StudentAdapter(Context context, List<StudentModel> studentModelList, RecyclerView recyclerView, CallBackPosition callBackPosition) {
@@ -64,11 +66,11 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
                 studentModelList.remove(position);
             }
         });
-
         holder.editStudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                passDataToEditStudentInfo(studentModel);
+                callBackPosition.editStudentInformation(studentModel);
+                notifyDataSetChanged();
             }
         });
     }
@@ -89,18 +91,5 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
             editStudent = itemView.findViewById(R.id.buttonEditStudent);
             deleteStudent = itemView.findViewById(R.id.buttonDeleteStudent);
         }
-    }
-
-    public void passDataToEditStudentInfo(StudentModel studentModel){
-        Intent intent = new Intent(context, EditStudentActivity.class);
-        intent.putExtra("studentId",studentModel.getStudentId());
-        intent.putExtra("studentFirstName", studentModel.getFirstName());
-        intent.putExtra("studentLastName", studentModel.getLastName());
-        intent.putExtra("studentMiddleName", studentModel.getMiddleName());
-        intent.putExtra("studentGender", studentModel.getStudentGender());
-        intent.putExtra("studentAge", studentModel.getStudentAge());
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-        notifyDataSetChanged();
     }
 }

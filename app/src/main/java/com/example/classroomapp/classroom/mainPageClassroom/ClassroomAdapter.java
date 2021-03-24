@@ -29,6 +29,8 @@ public class ClassroomAdapter extends RecyclerView.Adapter<ClassroomAdapter.View
 
     public interface CallBackPosition{
         void deleteClassGetPosition(int position);
+        void showCurrentClass(ClassroomModel classroomModel);
+        void editCurrentClass(ClassroomModel classroomModel);
     }
 
     public ClassroomAdapter(Context context, List<ClassroomModel> classroomModelList, RecyclerView recyclerView, CallBackPosition callBackPosition){
@@ -66,14 +68,15 @@ public class ClassroomAdapter extends RecyclerView.Adapter<ClassroomAdapter.View
         holder.editClass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               passDataToEditClassroomActivity(classroom);
+                callBackPosition.editCurrentClass(classroom);
+                notifyDataSetChanged();
             }
         });
 
         holder.classroomName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                passDataToShowClassroomActivity(classroom);
+                callBackPosition.showCurrentClass(classroom);
             }
         });
     }
@@ -95,28 +98,4 @@ public class ClassroomAdapter extends RecyclerView.Adapter<ClassroomAdapter.View
             deleteClass = itemView.findViewById(R.id.buttonDeleteClass);
         }
     }
-
-    public void passDataToShowClassroomActivity(ClassroomModel classroom){
-        Intent intent = new Intent(context, CurrentClassAndStudentsActivity.class);
-        intent.putExtra("classroomId",classroom.getId());
-        intent.putExtra("classroomName", classroom.getClassroomName());
-        intent.putExtra("classroomRoom", classroom.getClassroomRoomNumber());
-        intent.putExtra("classroomFloor", classroom.getClassroomFloor());
-        intent.putExtra("classroomStudentCount", classroom.getStudentCount());
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-    }
-
-    public void passDataToEditClassroomActivity(ClassroomModel classroom){
-        Intent intent = new Intent(context, EditClassActivity.class);
-        intent.putExtra("classroomId",classroom.getId());
-        intent.putExtra("classroomName", classroom.getClassroomName());
-        intent.putExtra("classroomRoom", classroom.getClassroomRoomNumber());
-        intent.putExtra("classroomFloor", classroom.getClassroomFloor());
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-        notifyDataSetChanged();
-    }
-
-
 }

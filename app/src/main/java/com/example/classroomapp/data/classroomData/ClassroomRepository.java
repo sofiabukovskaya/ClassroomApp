@@ -22,7 +22,7 @@ public class ClassroomRepository implements MainContract.Repository, EditClassro
 
 
     public ClassroomRepository(Context context) {
-        dataBaseClassroom = new DataBaseClassroom(context.getApplicationContext());
+        dataBaseClassroom = new DataBaseClassroom(context);
     }
 
     private Cursor getAllEntries(){
