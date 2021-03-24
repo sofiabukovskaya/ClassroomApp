@@ -73,6 +73,12 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
                 notifyDataSetChanged();
             }
         });
+        holder.studentFirstName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callBackPosition.showCurrentStudent(studentModel);
+            }
+        });
     }
 
     @Override
