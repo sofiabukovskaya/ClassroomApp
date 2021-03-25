@@ -18,6 +18,7 @@ import com.example.classroomapp.model.ClassroomModel;
 import com.example.classroomapp.model.StudentModel;
 import com.example.classroomapp.student.editStudent.EditStudentActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHolder> {
@@ -97,5 +98,11 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
             editStudent = itemView.findViewById(R.id.buttonEditStudent);
             deleteStudent = itemView.findViewById(R.id.buttonDeleteStudent);
         }
+    }
+
+    public void setFilter(ArrayList<StudentModel> filteredNewList) {
+        studentModelList = new ArrayList<>();
+        studentModelList.addAll(filteredNewList);
+        notifyDataSetChanged();
     }
 }

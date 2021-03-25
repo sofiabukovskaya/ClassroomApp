@@ -3,6 +3,7 @@ package com.example.classroomapp.student.mainPageStudent;
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,7 +18,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.os.PersistableBundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +37,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class CurrentClassAndStudentsActivity extends AppCompatActivity implements CurrentClassAndStudentsContract.View, StudentAdapter.CallBackPosition {
+public class CurrentClassAndStudentsActivity extends AppCompatActivity implements CurrentClassAndStudentsContract.View, StudentAdapter.CallBackPosition, SearchView.OnQueryTextListener {
 
     private CurrentClassAndStudentsContract.Presenter currentClassAndStudentPresenter;
 
@@ -70,6 +74,22 @@ public class CurrentClassAndStudentsActivity extends AppCompatActivity implement
                     startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setQueryHint("Search student by first name");
+        searchView.setOnQueryTextListener(this);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
     @Override
     protected void onResume() {
@@ -154,5 +174,25 @@ public class CurrentClassAndStudentsActivity extends AppCompatActivity implement
                 }, 1000);
             }
         });
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        newText = newText.toLowerCase();
+        ArrayList<StudentModel> filteredNewList = new ArrayList<>();
+        currentClassAndStudentPresenter.loadAllDataInRecyclerView(classroomId);
+        for(StudentModel studentModel: currentClassAndStudentPresenter.loadAllDataInRecyclerView(classroomId)) {
+            String firstNameStudent = studentModel.getFirstName().toLowerCase();
+            if(firstNameStudent.contains(newText)) {
+                filteredNewList.add(studentModel);
+            }
+        }
+        studentAdapter.setFilter(filteredNewList);
+        return true;
     }
 }

@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.classroomapp.classroom.addClassroom.AddClassroomContract;
 import com.example.classroomapp.classroom.editClassroom.EditClassroomContract;
 import com.example.classroomapp.classroom.mainPageClassroom.MainContract;
+import com.example.classroomapp.data.studentData.DataBaseStudent;
 import com.example.classroomapp.model.ClassroomModel;
 
 import java.util.ArrayList;
@@ -28,7 +29,6 @@ public class ClassroomRepository implements MainContract.Repository, EditClassro
     private Cursor getAllEntries(){
         String query = "SELECT * FROM " + DataBaseClassroom.TABLE_NAME;
         sqLiteDatabase = dataBaseClassroom.getReadableDatabase();
-
         Cursor cursor = null;
         if(sqLiteDatabase != null) {
             cursor = sqLiteDatabase.rawQuery(query, null);

@@ -1,6 +1,8 @@
 package com.example.classroomapp.classroom.mainPageClassroom;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,7 +12,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.classroomapp.R;
@@ -22,7 +27,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements MainContract.View, ClassroomAdapter.CallBackPosition {
+public class MainActivity extends AppCompatActivity implements MainContract.View, ClassroomAdapter.CallBackPosition, SearchView.OnQueryTextListener {
 
     MainContract.Presenter mainContractPresenter;
     private RecyclerView recyclerView;
@@ -48,6 +53,22 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setQueryHint("Search class by name");
+        searchView.setOnQueryTextListener(this);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -109,4 +130,23 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         classroomAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        newText = newText.toLowerCase();
+        ArrayList<ClassroomModel> filteredNewList = new ArrayList<>();
+        mainContractPresenter.loadAllDataInRecyclerView();
+        for(ClassroomModel classroomModel: mainContractPresenter.loadAllDataInRecyclerView()) {
+            String classModelName = classroomModel.getClassroomName().toLowerCase();
+            if(classModelName.contains(newText)) {
+                filteredNewList.add(classroomModel);
+            }
+        }
+        classroomAdapter.setFilter(filteredNewList);
+        return true;
+    }
 }
