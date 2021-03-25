@@ -3,6 +3,8 @@ package com.example.classroomapp.student.mainPageStudent;
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,6 +28,7 @@ import com.example.classroomapp.model.StudentModel;
 import com.example.classroomapp.student.addStudent.AddStudentActivity;
 import com.example.classroomapp.student.editStudent.EditStudentActivity;
 import com.example.classroomapp.student.studentInfoAndMarks.MainStudentInfoMarksActivity;
+import com.example.classroomapp.student.studentInfoAndMarks.studentInfo.StudentInfoFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -107,7 +110,19 @@ public class CurrentClassAndStudentsActivity extends AppCompatActivity implement
 
     @Override
     public void showCurrentStudent(StudentModel studentModel) {
-            startActivity(new Intent(CurrentClassAndStudentsActivity.this, MainStudentInfoMarksActivity.class));
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(CurrentClassAndStudentsActivity.this, MainStudentInfoMarksActivity.class);
+                intent.putExtra("studentId",studentModel.getStudentId());
+                intent.putExtra("studentFirstName", studentModel.getFirstName());
+                intent.putExtra("studentLastName", studentModel.getLastName());
+                intent.putExtra("studentMiddleName", studentModel.getMiddleName());
+                intent.putExtra("studentGender", studentModel.getStudentGender());
+                intent.putExtra("studentAge", studentModel.getStudentAge());
+                startActivity(intent);
+            }
+        }).start();
     }
 
     @Override
