@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ClassroomApp">
-        <activity android:name=".student.studentInfoAndMarks.MainStudentInfoMarksActivity"></activity>
+        <activity android:name=".student.studentInfoAndMarks.markInfo.addMark.AddMarkActivity"></activity>
+        <activity android:name=".student.studentInfoAndMarks.MainStudentInfoMarksActivity" />
         <activity
             android:name=".student.editStudent.EditStudentActivity"
             android:label="Edit student info"

@@ -29,10 +29,10 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements MainContract.View, ClassroomAdapter.CallBackPosition, SearchView.OnQueryTextListener {
 
-    MainContract.Presenter mainContractPresenter;
+    private MainContract.Presenter mainContractPresenter;
     private RecyclerView recyclerView;
-    public FloatingActionButton floatingActionButton;
-    public ClassroomAdapter classroomAdapter;
+    private FloatingActionButton floatingActionButton;
+    private ClassroomAdapter classroomAdapter;
     private ProgressDialog progressDialog;
 
     @Override

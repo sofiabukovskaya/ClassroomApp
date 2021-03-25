@@ -1,13 +1,13 @@
 package com.example.classroomapp.model;
 
 public class StudentModel {
-    Integer studentId;
-    String firstName;
-    String lastName;
-    String middleName;
-    String studentGender;
-    Integer studentAge;
-    Integer classroomId;
+    private Integer studentId;
+    private String firstName;
+    private String lastName;
+    private String middleName;
+    private String studentGender;
+    private Integer studentAge;
+    private Integer classroomId;
 
     public StudentModel(Integer studentId, String firstName, String lastName, String middleName, String studentGender, Integer studentAge, Integer classroomId) {
         this.studentId = studentId;
