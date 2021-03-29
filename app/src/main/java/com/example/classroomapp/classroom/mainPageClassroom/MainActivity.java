@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.SyncStateContract;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     private FloatingActionButton floatingActionButton;
     private ClassroomAdapter classroomAdapter;
     private ProgressDialog progressDialog;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +71,62 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.sortItems){
+            sortOptionDialog();
+        }
         return super.onOptionsItemSelected(item);
+    }
+    public void loadSortedClassDataASC() {
+        classroomAdapter = new ClassroomAdapter(getApplicationContext(), mainContractPresenter.orderItemsDataByClassASC(), recyclerView, this);
+        recyclerView.setAdapter(classroomAdapter);
+    }
+    public void loadSortedClassDataDESC() {
+        classroomAdapter = new ClassroomAdapter(getApplicationContext(), mainContractPresenter.orderItemsDataByClassDESC(), recyclerView, this);
+        recyclerView.setAdapter(classroomAdapter);
+    }
+
+    public void loadSortedCabinetDataASC() {
+
+        classroomAdapter = new ClassroomAdapter(getApplicationContext(), mainContractPresenter.orderItemsDataByCabinetASC(), recyclerView, this);
+        recyclerView.setAdapter(classroomAdapter);
+    }
+
+    public void loadSortedCabinetDataDESC() {
+        classroomAdapter = new ClassroomAdapter(getApplicationContext(), mainContractPresenter.orderItemsDataByCabinetDESC(), recyclerView, this);
+        recyclerView.setAdapter(classroomAdapter);
+    }
+
+
+
+    private void sortOptionDialog() {
+        String[] options = {"Title ASC", "Title DECS", "Cabinet number ASC", "Cabinet number DECS"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Sort by")
+                .setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which ==0){
+                            loadSortedClassDataASC();
+                        } if(which==1){
+                            loadSortedClassDataDESC();
+                        } if(which ==2) {
+                            loadSortedCabinetDataASC();
+                        }
+                        if (which == 3) {
+                            loadSortedCabinetDataDESC();
+                        }
+                    }
+                })
+                .create().show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        classroomAdapter = new ClassroomAdapter(getApplicationContext(), mainContractPresenter.loadAllDataInRecyclerView(), recyclerView, this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(classroomAdapter);
     }
 
     @Override

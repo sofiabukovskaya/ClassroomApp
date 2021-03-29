@@ -6,15 +6,18 @@ import com.example.classroomapp.data.classroomData.ClassroomRepository;
 import com.example.classroomapp.model.ClassroomModel;
 
 import java.util.List;
+import java.util.logging.Handler;
 
 public class MainPresenter implements MainContract.Presenter {
 
     MainContract.View view;
     MainContract.Repository repository;
 
+
     public MainPresenter(MainContract.View callback, Context context) {
         this.view = callback;
         this.repository =  new ClassroomRepository(context);
+
     }
 
     @Override
@@ -32,5 +35,26 @@ public class MainPresenter implements MainContract.Presenter {
             }
         }).start();
     }
+
+    @Override
+    public List<ClassroomModel> orderItemsDataByClassASC() {
+        return repository.orderItemsByClassName();
+    }
+
+    @Override
+    public List<ClassroomModel> orderItemsDataByClassDESC() {
+        return repository.orderItemsByClassNameDESC();
+    }
+
+    @Override
+    public List<ClassroomModel> orderItemsDataByCabinetASC() {
+        return repository.orderItemsByCabinetACS();
+    }
+
+    @Override
+    public List<ClassroomModel> orderItemsDataByCabinetDESC() {
+        return repository.orderItemsByCabinetDESC();
+    }
+
 
 }

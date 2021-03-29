@@ -21,6 +21,11 @@ public class ClassroomRepository implements MainContract.Repository, EditClassro
     private Integer positionId;
     private ArrayList<ClassroomModel> classrooms;
 
+    String orderByNameClassASC = DataBaseClassroom.COLUMN_NAME + " ASC";
+    String orderByNameClassDESC = DataBaseClassroom.COLUMN_NAME + " DESC";
+    String orderByCabinetClassASC = DataBaseClassroom.COLUMN_ROOM_NUMBER + " ASC";
+    String orderByCabinetClassDESC = DataBaseClassroom.COLUMN_ROOM_NUMBER + " DESC";
+
 
     public ClassroomRepository(Context context) {
         dataBaseClassroom = new DataBaseClassroom(context);
@@ -28,6 +33,16 @@ public class ClassroomRepository implements MainContract.Repository, EditClassro
 
     private Cursor getAllEntries(){
         String query = "SELECT * FROM " + DataBaseClassroom.TABLE_NAME;
+        sqLiteDatabase = dataBaseClassroom.getReadableDatabase();
+        Cursor cursor = null;
+        if(sqLiteDatabase != null) {
+            cursor = sqLiteDatabase.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
+    private Cursor getAllSortedEntries(String orderBy){
+        String query = "SELECT * FROM " + DataBaseClassroom.TABLE_NAME + " ORDER BY " + orderBy;
         sqLiteDatabase = dataBaseClassroom.getReadableDatabase();
         Cursor cursor = null;
         if(sqLiteDatabase != null) {
@@ -77,6 +92,71 @@ public class ClassroomRepository implements MainContract.Repository, EditClassro
                 DataBaseClassroom.COLUMN_ID + " -1 " + " WHERE " + DataBaseClassroom.COLUMN_ID + " > " + position + ";");
         sqLiteDatabase.close();
     }
+
+    @Override
+    public List<ClassroomModel> orderItemsByClassName() {
+        classrooms = new ArrayList<>();
+        Cursor cursor = getAllSortedEntries(orderByNameClassASC);
+        while (cursor.moveToNext()){
+            int id = cursor.getInt(cursor.getColumnIndex(DataBaseClassroom.COLUMN_ID));
+            String name = cursor.getString(cursor.getColumnIndex(DataBaseClassroom.COLUMN_NAME));
+            int room = cursor.getInt(cursor.getColumnIndex(DataBaseClassroom.COLUMN_ROOM_NUMBER));
+            int floor = cursor.getInt(cursor.getColumnIndex(DataBaseClassroom.COLUMN_FLOOR_NUMBER));
+            int student_count = cursor.getInt(cursor.getColumnIndex(DataBaseClassroom.COLUMN_STUDENTS_COUNT));
+            classrooms.add(new ClassroomModel(id, name, room, floor, student_count));
+        }
+        cursor.close();
+        return classrooms;
+    }
+
+    @Override
+    public List<ClassroomModel> orderItemsByClassNameDESC() {
+        classrooms = new ArrayList<>();
+        Cursor cursor = getAllSortedEntries(orderByCabinetClassDESC);
+        while (cursor.moveToNext()){
+            int id = cursor.getInt(cursor.getColumnIndex(DataBaseClassroom.COLUMN_ID));
+            String name = cursor.getString(cursor.getColumnIndex(DataBaseClassroom.COLUMN_NAME));
+            int room = cursor.getInt(cursor.getColumnIndex(DataBaseClassroom.COLUMN_ROOM_NUMBER));
+            int floor = cursor.getInt(cursor.getColumnIndex(DataBaseClassroom.COLUMN_FLOOR_NUMBER));
+            int student_count = cursor.getInt(cursor.getColumnIndex(DataBaseClassroom.COLUMN_STUDENTS_COUNT));
+            classrooms.add(new ClassroomModel(id, name, room, floor, student_count));
+        }
+        cursor.close();
+        return classrooms;
+    }
+
+    @Override
+    public List<ClassroomModel> orderItemsByCabinetACS() {
+        classrooms = new ArrayList<>();
+        Cursor cursor = getAllSortedEntries(orderByCabinetClassASC);
+        while (cursor.moveToNext()){
+            int id = cursor.getInt(cursor.getColumnIndex(DataBaseClassroom.COLUMN_ID));
+            String name = cursor.getString(cursor.getColumnIndex(DataBaseClassroom.COLUMN_NAME));
+            int room = cursor.getInt(cursor.getColumnIndex(DataBaseClassroom.COLUMN_ROOM_NUMBER));
+            int floor = cursor.getInt(cursor.getColumnIndex(DataBaseClassroom.COLUMN_FLOOR_NUMBER));
+            int student_count = cursor.getInt(cursor.getColumnIndex(DataBaseClassroom.COLUMN_STUDENTS_COUNT));
+            classrooms.add(new ClassroomModel(id, name, room, floor, student_count));
+        }
+        cursor.close();
+        return classrooms;
+    }
+
+    @Override
+    public List<ClassroomModel> orderItemsByCabinetDESC() {
+        classrooms = new ArrayList<>();
+        Cursor cursor = getAllSortedEntries(orderByCabinetClassDESC);
+        while (cursor.moveToNext()){
+            int id = cursor.getInt(cursor.getColumnIndex(DataBaseClassroom.COLUMN_ID));
+            String name = cursor.getString(cursor.getColumnIndex(DataBaseClassroom.COLUMN_NAME));
+            int room = cursor.getInt(cursor.getColumnIndex(DataBaseClassroom.COLUMN_ROOM_NUMBER));
+            int floor = cursor.getInt(cursor.getColumnIndex(DataBaseClassroom.COLUMN_FLOOR_NUMBER));
+            int student_count = cursor.getInt(cursor.getColumnIndex(DataBaseClassroom.COLUMN_STUDENTS_COUNT));
+            classrooms.add(new ClassroomModel(id, name, room, floor, student_count));
+        }
+        cursor.close();
+        return classrooms;
+    }
+
 
     @Override
     public long updateClass(ClassroomModel classroomModel) {
