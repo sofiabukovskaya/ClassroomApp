@@ -22,6 +22,10 @@ public class StudentRepository implements CurrentClassAndStudentsContract.Reposi
     private SQLiteDatabase sqLiteDatabase;
     private ArrayList<StudentModel> studentModelArrayList;
 
+    String orderByFirstNameASC = DataBaseStudent.COLUMN_NAME + " ASC";
+    String orderByFirstNameDESC = DataBaseStudent.COLUMN_NAME + " DESC";
+    String orderBySecondNameASC = DataBaseStudent.COLUMN_LAST_NAME + " ASC";
+    String orderBySecondNameDESC = DataBaseStudent.COLUMN_LAST_NAME + " DESC";
     public StudentRepository(Context context) {
             dataBaseStudent = new DataBaseStudent(context.getApplicationContext());
     }
@@ -37,6 +41,15 @@ public class StudentRepository implements CurrentClassAndStudentsContract.Reposi
         return cursor;
     }
 
+    private Cursor getAllSortedEntries(String orderBy){
+        String query = "SELECT * FROM " + DataBaseClassroom.TABLE_NAME + " ORDER BY " + orderBy;
+        sqLiteDatabase = dataBaseStudent.getReadableDatabase();
+        Cursor cursor = null;
+        if(sqLiteDatabase != null) {
+            cursor = sqLiteDatabase.rawQuery(query, null);
+        }
+        return cursor;
+    }
     @Override
     public List<StudentModel> getStudentsFromCurrentClass(int classroomId) {
         studentModelArrayList = new ArrayList<>();
@@ -79,6 +92,26 @@ public class StudentRepository implements CurrentClassAndStudentsContract.Reposi
         sqLiteDatabase.execSQL("UPDATE " + DataBaseStudent.TABLE_NAME + " SET " +  DataBaseStudent.COLUMN_ID + " = " +
                 DataBaseStudent.COLUMN_ID + " -1 " + " WHERE " + DataBaseStudent.COLUMN_ID + " > " + position + ";");
         sqLiteDatabase.close();
+    }
+
+    @Override
+    public List<StudentModel> orderItemsByFirstName() {
+        return null;
+    }
+
+    @Override
+    public List<StudentModel> orderItemsByFirstNameDESC() {
+        return null;
+    }
+
+    @Override
+    public List<StudentModel> orderItemsBySecondNameACS() {
+        return null;
+    }
+
+    @Override
+    public List<StudentModel> orderItemsBySecondNameDESC() {
+        return null;
     }
 
     @Override

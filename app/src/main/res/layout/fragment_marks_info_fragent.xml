@@ -3,12 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".student.studentInfoAndMarks.markInfo.MarksInfoFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewMarks"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Marks"
-        android:textSize="40dp"/>
+        android:layoutAnimation="@anim/layout_animation"
+        tools:layout_editor_absoluteX="143dp"
+        tools:layout_editor_absoluteY="345dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButtonMarks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="335dp"
+        android:layout_marginTop="550dp"
+        android:src="@drawable/add" />
 
 </FrameLayout>

@@ -16,10 +16,18 @@ public interface CurrentClassAndStudentsContract {
     interface Presenter{
         List<StudentModel> loadAllDataInRecyclerView(int position);
         void alertToDeleteClass(int position);
+        List<StudentModel> orderItemsDataByFirstNameASC();
+        List<StudentModel> orderItemsDataByFirstNameDESC();
+        List<StudentModel> orderItemsDataBySecondNameASC();
+        List<StudentModel> orderItemsDataBySecondNameDESC();
     }
 
     interface Repository{
         List<StudentModel> getStudentsFromCurrentClass(int classroomId);
         void deleteStudentFromClass(int position);
+        List<StudentModel> orderItemsByFirstName();
+        List<StudentModel> orderItemsByFirstNameDESC();
+        List<StudentModel> orderItemsBySecondNameACS();
+        List<StudentModel> orderItemsBySecondNameDESC();
     }
 }

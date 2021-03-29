@@ -112,7 +112,7 @@ public class ClassroomRepository implements MainContract.Repository, EditClassro
     @Override
     public List<ClassroomModel> orderItemsByClassNameDESC() {
         classrooms = new ArrayList<>();
-        Cursor cursor = getAllSortedEntries(orderByCabinetClassDESC);
+        Cursor cursor = getAllSortedEntries(orderByNameClassDESC);
         while (cursor.moveToNext()){
             int id = cursor.getInt(cursor.getColumnIndex(DataBaseClassroom.COLUMN_ID));
             String name = cursor.getString(cursor.getColumnIndex(DataBaseClassroom.COLUMN_NAME));

@@ -39,4 +39,24 @@ public class CurrentClassAndStudentsPresenter implements CurrentClassAndStudents
         }).start();
 
     }
+
+    @Override
+    public List<StudentModel> orderItemsDataByFirstNameASC() {
+        return null;
+    }
+
+    @Override
+    public List<StudentModel> orderItemsDataByFirstNameDESC() {
+        return null;
+    }
+
+    @Override
+    public List<StudentModel> orderItemsDataBySecondNameASC() {
+        return null;
+    }
+
+    @Override
+    public List<StudentModel> orderItemsDataBySecondNameDESC() {
+        return null;
+    }
 }

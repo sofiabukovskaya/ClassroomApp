@@ -89,8 +89,47 @@ public class CurrentClassAndStudentsActivity extends AppCompatActivity implement
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.sortItems){
+            sortOptionDialog();
+        }
         return super.onOptionsItemSelected(item);
     }
+
+    private void sortOptionDialog() {
+        String[] options = {"First name ASC", "First name DECS", "Second name ASC", "Second name DECS"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Sort by")
+                .setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which ==0){
+                            loadSortedFirstNameDataASC();
+                        } if(which==1){
+                            loadSortedFirstNameDataDESC();
+                        } if(which ==2) {
+                            loadSortedSecondNameDataASC();
+                        }
+                        if (which == 3) {
+                            loadSortedSecondNameDataDESC();
+                        }
+                    }
+                })
+                .create().show();
+    }
+
+    private void loadSortedSecondNameDataDESC() {
+    }
+
+    private void loadSortedSecondNameDataASC() {
+    }
+
+    private void loadSortedFirstNameDataDESC() {
+    }
+
+    private void loadSortedFirstNameDataASC() {
+    }
+
     @Override
     protected void onResume() {
         super.onResume();

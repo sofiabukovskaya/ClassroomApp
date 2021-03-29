@@ -85,13 +85,11 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         classroomAdapter = new ClassroomAdapter(getApplicationContext(), mainContractPresenter.orderItemsDataByClassDESC(), recyclerView, this);
         recyclerView.setAdapter(classroomAdapter);
     }
-
     public void loadSortedCabinetDataASC() {
 
         classroomAdapter = new ClassroomAdapter(getApplicationContext(), mainContractPresenter.orderItemsDataByCabinetASC(), recyclerView, this);
         recyclerView.setAdapter(classroomAdapter);
     }
-
     public void loadSortedCabinetDataDESC() {
         classroomAdapter = new ClassroomAdapter(getApplicationContext(), mainContractPresenter.orderItemsDataByCabinetDESC(), recyclerView, this);
         recyclerView.setAdapter(classroomAdapter);
@@ -100,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
 
     private void sortOptionDialog() {
-        String[] options = {"Title ASC", "Title DECS", "Cabinet number ASC", "Cabinet number DECS"};
+        String[] options = {"Classroom name ASC", "Classroom name DECS", "Cabinet number ASC", "Cabinet number DECS"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Sort by")
                 .setItems(options, new DialogInterface.OnClickListener() {
@@ -165,7 +163,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void showCurrentClass(ClassroomModel classroomModel) {
-
         Intent intent = new Intent(MainActivity.this, CurrentClassAndStudentsActivity.class);
         intent.putExtra("classroomId",classroomModel.getId());
         intent.putExtra("classroomName", classroomModel.getClassroomName());
