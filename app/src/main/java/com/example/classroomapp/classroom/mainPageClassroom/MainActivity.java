@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         }
         return super.onOptionsItemSelected(item);
     }
+
     public void loadSortedClassDataASC() {
         classroomAdapter = new ClassroomAdapter(getApplicationContext(), mainContractPresenter.orderItemsDataByClassASC(), recyclerView, this);
         recyclerView.setAdapter(classroomAdapter);

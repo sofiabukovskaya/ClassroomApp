@@ -48,13 +48,6 @@ public class MarkRepository implements AddMarkContract.Repository, MarkInfoContr
         return sqLiteDatabase.insert(DataBaseMark.TABLE_NAME, null, contentValues);
     }
 
-    public static String getDate(long milliSeconds, String dateFormat)
-    {
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat(dateFormat/*"yyyy/MM/dd HH:mm:ss"*/);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(milliSeconds);
-        return formatter.format(calendar.getTime());
-    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override

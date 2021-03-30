@@ -39,6 +39,7 @@ public class MainStudentInfoMarksActivity extends AppCompatActivity {
         bundle1.putInt("studentId",studentId);
         marksInfoFragment.setArguments(bundle1);
     }
+
     private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {

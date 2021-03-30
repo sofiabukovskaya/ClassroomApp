@@ -13,11 +13,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.classroomapp.R;
+import com.example.classroomapp.model.ClassroomModel;
 import com.example.classroomapp.model.MarkModel;
 import com.example.classroomapp.model.StudentModel;
 import com.example.classroomapp.student.mainPageStudent.StudentAdapter;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MarkAdapter extends RecyclerView.Adapter<MarkAdapter.ViewHolder> {
@@ -71,5 +73,11 @@ public class MarkAdapter extends RecyclerView.Adapter<MarkAdapter.ViewHolder> {
             markValue = itemView.findViewById(R.id.mark_Mark);
             deleteMark = itemView.findViewById(R.id.buttonDeleteMark);
         }
+    }
+
+    public void setFilter(ArrayList<MarkModel> filteredNewList) {
+        markModelList = new ArrayList<>();
+        markModelList.addAll(filteredNewList);
+        notifyDataSetChanged();
     }
 }
