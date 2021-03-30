@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -12,13 +14,20 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.classroomapp.R;
+import com.example.classroomapp.classroom.mainPageClassroom.MainActivity;
+import com.example.classroomapp.student.addStudent.AddStudentActivity;
 import com.example.classroomapp.student.addStudent.GenderSpinnerAdapter;
+import com.example.classroomapp.student.studentInfoAndMarks.markInfo.MarksInfoFragment;
 
 import java.util.Calendar;
 
-public class AddMarkActivity extends AppCompatActivity {
+public class AddMarkActivity extends AppCompatActivity implements AddMarkContract.View {
+
+
+    private AddMarkContract.Presenter addMarkPresenter;
     private Spinner spinnerSubject, spinnerMark;
     private Button addDataMark, addNewMark;
     private TextView showSelectedData;
@@ -27,7 +36,8 @@ public class AddMarkActivity extends AppCompatActivity {
     private SubjectSpinnerAdapter subjectSpinnerAdapter;
     private MarkSpinnerAdapter markSpinnerAdapter;
     public Integer day, month, year;
-
+    Integer positionStudentId;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +48,9 @@ public class AddMarkActivity extends AppCompatActivity {
         addDataMark = findViewById(R.id.button_add_data_mark);
         addNewMark = findViewById(R.id.button_add_new_Mark);
         showSelectedData = findViewById(R.id.textView_dataMark);
-
+        addMarkPresenter = new AddMarkPresenter(this, getApplicationContext());
         initialiseSpinners();
-
+        positionStudentId = getIntent().getIntExtra("studentId",0);
         addDataMark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,6 +62,15 @@ public class AddMarkActivity extends AppCompatActivity {
                     }
                 });
 
+            }
+        });
+
+        addNewMark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                progressDialog = ProgressDialog.show(AddMarkActivity.this,"Adding new mark","loading...");
+                addMarkPresenter.addButtonWasClicked(spinnerSubject.getSelectedItem().toString(), Integer.valueOf(spinnerMark.getSelectedItem().toString()),
+                        showSelectedData.getText().toString(),positionStudentId);
             }
         });
     }
@@ -103,5 +122,23 @@ public class AddMarkActivity extends AppCompatActivity {
             datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
             datePickerDialog.show();
         }
+    }
+
+    @Override
+    public void onSuccess(String messageAlert) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(AddMarkActivity.this, messageAlert, Toast.LENGTH_SHORT).show();
+//                        progressDialog.dismiss();
+                        startActivity(new Intent(AddMarkActivity.this, MarksInfoFragment.class));
+                    }
+                },1000);
+            }
+        });
     }
 }

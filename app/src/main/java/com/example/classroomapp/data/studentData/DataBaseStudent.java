@@ -11,7 +11,7 @@ import com.example.classroomapp.data.classroomData.DataBaseClassroom;
 public class DataBaseStudent extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME="classrooms_database.db";
-    static final String TABLE_NAME="students";
+    public static final String TABLE_NAME="students";
 
 
     //columns name

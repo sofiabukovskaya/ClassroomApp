@@ -54,6 +54,7 @@ public class AddStudentActivity extends AppCompatActivity implements AddStudentC
         genderSpinner.setAdapter(genderSpinnerAdapter);
         addStudentPresenter = new AddStudentPresenter(this, getApplicationContext());
         positionClass = getIntent().getIntExtra("classroomPosition",0);
+
         addStudentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

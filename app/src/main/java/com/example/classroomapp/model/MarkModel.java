@@ -6,11 +6,11 @@ public class MarkModel {
      private Integer mark_ID;
      private String subjectName;
      private Integer mark;
-     private Date markDate;
+     private String markDate;
      private String typeOfMark;
      private Integer studentId;
 
-    public MarkModel(Integer mark_ID, String subjectName, Integer mark, Date markDate, String typeOfMark, Integer studentId) {
+    public MarkModel(Integer mark_ID, String subjectName, Integer mark, String markDate, String typeOfMark, Integer studentId) {
         this.mark_ID = mark_ID;
         this.subjectName = subjectName;
         this.mark = mark;
@@ -43,11 +43,11 @@ public class MarkModel {
         this.mark = mark;
     }
 
-    public Date getMarkDate() {
+    public String getMarkDate() {
         return markDate;
     }
 
-    public void setMarkDate(Date markDate) {
+    public void setMarkDate(String markDate) {
         this.markDate = markDate;
     }
 
