@@ -1,5 +1,7 @@
 package com.example.classroomapp.student.studentInfoAndMarks.markInfo;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -19,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 
 import com.example.classroomapp.R;
+import com.example.classroomapp.classroom.mainPageClassroom.ClassroomAdapter;
 import com.example.classroomapp.model.ClassroomModel;
 import com.example.classroomapp.model.MarkModel;
 import com.example.classroomapp.student.addStudent.AddStudentActivity;
@@ -35,6 +38,9 @@ public class MarksInfoFragment extends Fragment implements MarkInfoContract.View
     private RecyclerView recyclerViewMarks;
     private Integer idStudent;
     private MarkAdapter markAdapter;
+    public String listItems[];
+    public ArrayList<Integer> selectedItems = new ArrayList<>();
+
 
     public MarksInfoFragment() {
 
@@ -76,7 +82,6 @@ public class MarksInfoFragment extends Fragment implements MarkInfoContract.View
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         getActivity().getMenuInflater().inflate(R.menu.menu_for_mark, menu);
-
         MenuItem searchItem = menu.findItem(R.id.search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setQueryHint("Search mark by subject name");
@@ -84,10 +89,51 @@ public class MarksInfoFragment extends Fragment implements MarkInfoContract.View
     }
 
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.filterItems){
+           filterMarkOptionsMenu();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void filterMarkOptionsMenu() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        listItems = getActivity().getResources().getStringArray(R.array.chose_items);
+        builder.setTitle("Choose mark(s)")
+                .setMultiChoiceItems(listItems, null, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                    if(isChecked) {
+                            selectedItems.add(Integer.valueOf(listItems[which]));
+                         } else {
+                                selectedItems.remove(listItems[which]);
+                         }
+                    }
+                })
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        getFilterList(selectedItems);
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                     @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            selectedItems.clear();
+                         }
+        }) .create().show();
+    }
 
     @Override
     public void onSuccess(String messageAlert) {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        selectedItems.clear();
     }
 
     @Override
@@ -106,6 +152,26 @@ public class MarksInfoFragment extends Fragment implements MarkInfoContract.View
                 filteredNewList.add(markModel);
             }
         }
+        markAdapter.setFilter(filteredNewList);
+        return true;
+    }
+
+    public boolean getFilterList(ArrayList<Integer> marks){
+        ArrayList<MarkModel> filteredNewList = new ArrayList<>();
+        markPresenter.loadAllDataInRecyclerView(idStudent);
+        int index = 0;
+        try {
+            for(MarkModel markModel: markPresenter.loadAllDataInRecyclerView(idStudent)) {
+                Integer markValue = Integer.valueOf(markModel.getMark());
+                if(markValue.equals(marks.get(index))) {
+                    filteredNewList.add(markModel);
+                    index++;
+                }
+
+            }
+        } catch (IndexOutOfBoundsException indexOutOfBoundsException) {
+            indexOutOfBoundsException.getMessage();
+             }
         markAdapter.setFilter(filteredNewList);
         return true;
     }
