@@ -63,7 +63,7 @@ public class MainStudentInfoMarksActivity extends AppCompatActivity {
     public void getInformationFromActivity(){
 
                 Intent intent = getIntent();
-                 studentId = intent.getIntExtra("studentId",0);
+                studentId = intent.getIntExtra("studentId",0);
                 firstNameStudent = intent.getStringExtra("studentFirstName");
                 secondNameStudent = intent.getStringExtra("studentLastName");
                 middleNameStudent = intent.getStringExtra("studentMiddleName");

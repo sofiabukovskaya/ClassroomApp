@@ -15,6 +15,7 @@ import com.example.classroomapp.model.MarkModel;
 import com.example.classroomapp.model.StudentModel;
 import com.example.classroomapp.student.studentInfoAndMarks.markInfo.MarkInfoContract;
 import com.example.classroomapp.student.studentInfoAndMarks.markInfo.addMark.AddMarkContract;
+import com.example.classroomapp.student.studentInfoAndMarks.stitisticInfo.StatisticsInfoContract;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -25,10 +26,11 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class MarkRepository implements AddMarkContract.Repository, MarkInfoContract.Repository {
+public class MarkRepository implements AddMarkContract.Repository, MarkInfoContract.Repository, StatisticsInfoContract.Repository {
     private DataBaseMark dataBaseMark;
     private SQLiteDatabase sqLiteDatabase;
     private ArrayList<MarkModel> markModelArrayList;
+    Integer countOf1;
 
     public MarkRepository(Context context) {
         this.dataBaseMark = new DataBaseMark(context.getApplicationContext());
@@ -38,7 +40,6 @@ public class MarkRepository implements AddMarkContract.Repository, MarkInfoContr
     @Override
     public long addMark(MarkModel markModel) {
         sqLiteDatabase = dataBaseMark.getWritableDatabase();
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         ContentValues contentValues = new ContentValues();
         contentValues.put(DataBaseMark.COLUMN_SUBJECT_NAME, markModel.getSubjectName());
         contentValues.put(DataBaseMark.COLUMN_MARK, markModel.getMark());
@@ -87,5 +88,16 @@ public class MarkRepository implements AddMarkContract.Repository, MarkInfoContr
         sqLiteDatabase.execSQL("UPDATE " + DataBaseMark.TABLE_NAME + " SET " +  DataBaseMark.COLUMN_ID + " = " +
                 DataBaseMark.COLUMN_ID + " -1 " + " WHERE " + DataBaseMark.COLUMN_ID + " > " + position + ";");
         sqLiteDatabase.close();
+    }
+
+    @Override
+    public int getCountOfMark(Integer markValue) {
+        String countQuery = "SELECT " + DataBaseMark.COLUMN_MARK +" FROM " + DataBaseMark.TABLE_NAME + " WHERE " + DataBaseMark.COLUMN_MARK +
+                " = " + markValue;
+        SQLiteDatabase db = dataBaseMark.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        countOf1 = cursor.getCount();
+        cursor.close();
+        return countOf1;
     }
 }

@@ -45,11 +45,6 @@ public class MarksInfoFragment extends Fragment implements MarkInfoContract.View
     public String listItems[];
     public ArrayList<Integer> selectedItems = new ArrayList<>();
 
-
-    public MarksInfoFragment() {
-
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

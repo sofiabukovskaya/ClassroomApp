@@ -21,19 +21,22 @@ import com.example.classroomapp.student.mainPageStudent.StudentAdapter;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class MarkAdapter extends RecyclerView.Adapter<MarkAdapter.ViewHolder> {
 
     private Context context;
     private RecyclerView recyclerView;
-    private List<MarkModel> markModelList;
+    private List<MarkModel> markModelList= new ArrayList<>();
     private CallBackPositionMark callBackPosition;
     Integer currentMarkID;
 
     public interface CallBackPositionMark{
         void deleteStudentGetPosition(int position);
     }
+
     public MarkAdapter(Context context, RecyclerView recyclerView, List<MarkModel> markModelList, CallBackPositionMark callBackPosition) {
         this.context = context;
         this.recyclerView = recyclerView;
@@ -47,7 +50,7 @@ public class MarkAdapter extends RecyclerView.Adapter<MarkAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.mark_row, parent, false);
-        return new MarkAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @SuppressLint("SetTextI18n")
@@ -55,6 +58,7 @@ public class MarkAdapter extends RecyclerView.Adapter<MarkAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         MarkModel markModel  = markModelList.get(position);
+        currentMarkID = markModel.getMark();
 
         holder.markId.setText(Integer.toString(position +1));
         holder.subjectName.setText(markModel.getSubjectName());
@@ -69,6 +73,9 @@ public class MarkAdapter extends RecyclerView.Adapter<MarkAdapter.ViewHolder> {
                 markModelList.remove(position);
             }
         });
+
+
+
     }
 
     @Override
@@ -76,7 +83,7 @@ public class MarkAdapter extends RecyclerView.Adapter<MarkAdapter.ViewHolder> {
         return markModelList == null ? 0 : markModelList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView markId, subjectName, dateTextView, markValue;
         private ImageButton deleteMark;
 
@@ -91,7 +98,7 @@ public class MarkAdapter extends RecyclerView.Adapter<MarkAdapter.ViewHolder> {
     }
 
     public void setFilter(ArrayList<MarkModel> filteredNewList) {
-        markModelList = new ArrayList<>();
+        markModelList.clear();
         markModelList.addAll(filteredNewList);
         notifyDataSetChanged();
     }
