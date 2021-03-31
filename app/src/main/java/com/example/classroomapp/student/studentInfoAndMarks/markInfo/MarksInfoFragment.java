@@ -1,6 +1,8 @@
 package com.example.classroomapp.student.studentInfoAndMarks.markInfo;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,26 +14,28 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.classroomapp.R;
-import com.example.classroomapp.classroom.mainPageClassroom.ClassroomAdapter;
-import com.example.classroomapp.model.ClassroomModel;
 import com.example.classroomapp.model.MarkModel;
-import com.example.classroomapp.student.addStudent.AddStudentActivity;
 import com.example.classroomapp.student.mainPageStudent.CurrentClassAndStudentsActivity;
 import com.example.classroomapp.student.studentInfoAndMarks.markInfo.addMark.AddMarkActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
-public class MarksInfoFragment extends Fragment implements MarkInfoContract.View, SearchView.OnQueryTextListener {
+public class MarksInfoFragment extends Fragment implements MarkInfoContract.View, SearchView.OnQueryTextListener, MarkAdapter.CallBackPositionMark {
 
     private MarkInfoContract.Presenter markPresenter;
     private FloatingActionButton floatingActionButton;
@@ -60,7 +64,7 @@ public class MarksInfoFragment extends Fragment implements MarkInfoContract.View
         floatingActionButton = rootView.findViewById(R.id.floatingActionButtonMarks);
         recyclerViewMarks = rootView.findViewById(R.id.recyclerViewMarks);
         markPresenter = new MarkInfoPresenter(this, getContext());
-        markAdapter = new MarkAdapter(getContext(),recyclerViewMarks, markPresenter.loadAllDataInRecyclerView(idStudent));
+        markAdapter = new MarkAdapter(getContext(),recyclerViewMarks, markPresenter.loadAllDataInRecyclerView(idStudent), this);
         recyclerViewMarks.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerViewMarks.setAdapter(markAdapter);
         setHasOptionsMenu(true);
@@ -105,9 +109,9 @@ public class MarksInfoFragment extends Fragment implements MarkInfoContract.View
                 .setMultiChoiceItems(listItems, null, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                    if(isChecked) {
+                        if(isChecked) {
                             selectedItems.add(Integer.valueOf(listItems[which]));
-                         } else {
+                    } else {
                                 selectedItems.remove(listItems[which]);
                          }
                     }
@@ -127,13 +131,23 @@ public class MarksInfoFragment extends Fragment implements MarkInfoContract.View
 
     @Override
     public void onSuccess(String messageAlert) {
-
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getActivity(), messageAlert, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
     public void onResume() {
         super.onResume();
         selectedItems.clear();
+        markAdapter = new MarkAdapter(getContext(),recyclerViewMarks, markPresenter.loadAllDataInRecyclerView(idStudent), this);
+        recyclerViewMarks.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerViewMarks.setAdapter(markAdapter);
+        markAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -156,23 +170,30 @@ public class MarksInfoFragment extends Fragment implements MarkInfoContract.View
         return true;
     }
 
-    public boolean getFilterList(ArrayList<Integer> marks){
+    public void getFilterList(ArrayList<Integer> marks){
         ArrayList<MarkModel> filteredNewList = new ArrayList<>();
         markPresenter.loadAllDataInRecyclerView(idStudent);
         int index = 0;
         try {
             for(MarkModel markModel: markPresenter.loadAllDataInRecyclerView(idStudent)) {
-                Integer markValue = Integer.valueOf(markModel.getMark());
+                Integer markValue = markModel.getMark();
                 if(markValue.equals(marks.get(index))) {
                     filteredNewList.add(markModel);
                     index++;
                 }
-
             }
         } catch (IndexOutOfBoundsException indexOutOfBoundsException) {
-            indexOutOfBoundsException.getMessage();
+                 indexOutOfBoundsException.getMessage();
              }
         markAdapter.setFilter(filteredNewList);
-        return true;
+        selectedItems.clear();
+    }
+
+    @Override
+    public void deleteStudentGetPosition(int position) {
+        markPresenter.alertToDeleteMark(position);
+        markAdapter.notifyItemRemoved(position);
+        markAdapter.notifyDataSetChanged();
+
     }
 }

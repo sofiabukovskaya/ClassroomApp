@@ -52,4 +52,10 @@ public class StudentInfoFragment extends Fragment {
         ageStudentTextView.setText(String.valueOf(ageStudent) + " years old");
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setInformationAboutStudent();
+    }
 }

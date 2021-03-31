@@ -13,7 +13,6 @@ public class MarkInfoPresenter implements MarkInfoContract.Presenter {
 
     MarkInfoContract.View view;
     MarkInfoContract.Repository repository;
-    MarkModel markModel;
 
     public MarkInfoPresenter(MarkInfoContract.View callback, Context context) {
         this.view = callback;
@@ -27,6 +26,12 @@ public class MarkInfoPresenter implements MarkInfoContract.Presenter {
 
     @Override
     public void alertToDeleteMark(int position) {
-
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                repository.deleteMark(position);
+                view.onSuccess("Your mark is deleted!");
+            }
+        }).start();
     }
 }

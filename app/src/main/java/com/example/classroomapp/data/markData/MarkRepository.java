@@ -80,6 +80,12 @@ public class MarkRepository implements AddMarkContract.Repository, MarkInfoContr
 
     @Override
     public void deleteMark(int position) {
+        sqLiteDatabase = dataBaseMark.getWritableDatabase();
 
+        sqLiteDatabase.execSQL("DELETE FROM " + DataBaseMark.TABLE_NAME + " WHERE " + DataBaseMark.TABLE_NAME + "." +
+                DataBaseMark.COLUMN_ID + " = " + position + ";");
+        sqLiteDatabase.execSQL("UPDATE " + DataBaseMark.TABLE_NAME + " SET " +  DataBaseMark.COLUMN_ID + " = " +
+                DataBaseMark.COLUMN_ID + " -1 " + " WHERE " + DataBaseMark.COLUMN_ID + " > " + position + ";");
+        sqLiteDatabase.close();
     }
 }

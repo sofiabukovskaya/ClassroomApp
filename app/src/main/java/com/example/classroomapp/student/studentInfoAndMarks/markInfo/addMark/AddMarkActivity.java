@@ -20,7 +20,9 @@ import com.example.classroomapp.R;
 import com.example.classroomapp.classroom.mainPageClassroom.MainActivity;
 import com.example.classroomapp.student.addStudent.AddStudentActivity;
 import com.example.classroomapp.student.addStudent.GenderSpinnerAdapter;
+import com.example.classroomapp.student.studentInfoAndMarks.MainStudentInfoMarksActivity;
 import com.example.classroomapp.student.studentInfoAndMarks.markInfo.MarksInfoFragment;
+import com.example.classroomapp.student.studentInfoAndMarks.studentInfo.StudentInfoFragment;
 
 import java.util.Calendar;
 
@@ -38,6 +40,7 @@ public class AddMarkActivity extends AppCompatActivity implements AddMarkContrac
     public Integer day, month, year;
     Integer positionStudentId;
     private ProgressDialog progressDialog;
+    MarksInfoFragment marksInfoFragment = new MarksInfoFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +71,7 @@ public class AddMarkActivity extends AppCompatActivity implements AddMarkContrac
         addNewMark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                progressDialog = ProgressDialog.show(AddMarkActivity.this,"Adding new mark","loading...");
+                progressDialog = ProgressDialog.show(AddMarkActivity.this,"Adding new mark","loading...");
                 addMarkPresenter.addButtonWasClicked(spinnerSubject.getSelectedItem().toString(), Integer.valueOf(spinnerMark.getSelectedItem().toString()),
                         showSelectedData.getText().toString(),positionStudentId);
             }
@@ -134,7 +137,7 @@ public class AddMarkActivity extends AppCompatActivity implements AddMarkContrac
                     @Override
                     public void run() {
                         Toast.makeText(AddMarkActivity.this, messageAlert, Toast.LENGTH_SHORT).show();
-//                        progressDialog.dismiss();
+                        progressDialog.dismiss();
                         startActivity(new Intent(AddMarkActivity.this, MarksInfoFragment.class));
                     }
                 },1000);
